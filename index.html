@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ระบบป้องกันการบาดเจ็บจากเข็มทิ่ม — โรงพยาบาลชลบุรี</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #C0392B;
+  --red-light: #FDECEA;
+  --red-mid: #E74C3C;
+  --orange: #E67E22;
+  --orange-light: #FEF5E7;
+  --green: #27AE60;
+  --green-light: #EAFAF1;
+  --blue: #2980B9;
+  --blue-light: #EBF5FB;
+  --navy: #1A2E4A;
+  --navy-mid: #2C4A6E;
+  --gray: #7F8C8D;
+  --gray-light: #F4F6F7;
+  --gray-mid: #ECF0F1;
+  --white: #FFFFFF;
+  --text: #2C3E50;
+  --text-light: #7F8C8D;
+  --border: #D5D8DC;
+  --radius: 12px;
+  --shadow: 0 2px 16px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Sarabun', 'Noto Sans Thai', sans-serif;
+  background: #F0F4F8;
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* === SCREENS === */
+.screen { display: none; min-height: 100vh; flex-direction: column; }
+.screen.active { display: flex; }
+
+/* === TOP BAR === */
+.topbar {
+  background: var(--navy);
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.topbar-back {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.topbar-back:hover { background: rgba(255,255,255,0.25); }
+.topbar-title { font-size: 15px; font-weight: 600; flex: 1; }
+.topbar-sub { font-size: 12px; opacity: 0.7; }
+
+/* === HOME SCREEN === */
+#screen-home {
+  background: linear-gradient(160deg, #1A2E4A 0%, #2C4A6E 50%, #1A2E4A 100%);
+}
+.home-header {
+  padding: 40px 24px 32px;
+  text-align: center;
+  color: white;
+}
+.home-logo {
+  width: 72px; height: 72px;
+  background: white;
+  border-radius: 20px;
+  margin: 0 auto 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.home-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.home-sub {
+  font-size: 13px;
+  opacity: 0.75;
+  margin-bottom: 6px;
+}
+.home-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  font-size: 12px;
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+.home-content {
+  flex: 1;
+  background: #F0F4F8;
+  border-radius: 24px 24px 0 0;
+  padding: 28px 20px;
+  margin-top: -4px;
+}
+.home-section-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.menu-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  border: 1px solid transparent;
+  text-decoration: none;
+  color: inherit;
+}
+.menu-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.menu-card:active { transform: translateY(0); }
+.menu-card.danger { border-left: 4px solid var(--red); }
+.menu-card.blue { border-left: 4px solid var(--blue); }
+.menu-card.green { border-left: 4px solid var(--green); }
+.menu-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.menu-icon.danger { background: var(--red-light); }
+.menu-icon.blue { background: var(--blue-light); }
+.menu-icon.green { background: var(--green-light); }
+.menu-info { flex: 1; }
+.menu-info h3 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+.menu-info p { font-size: 12px; color: var(--text-light); line-height: 1.4; }
+.menu-arrow { font-size: 20px; color: var(--border); }
+
+.emergency-bar {
+  background: #FFF3CD;
+  border: 1px solid #FFEAA7;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+.emergency-bar span { font-size: 13px; color: #856404; }
+.emergency-bar strong { color: #533F03; }
+
+/* === STEP PROGRESS === */
+.step-progress {
+  background: white;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gray-mid);
+}
+.step-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+.step-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all 0.3s;
+}
+.step-dot.done { background: var(--green); }
+.step-dot.active { background: var(--red); width: 24px; border-radius: 4px; }
+.step-label { text-align: center; font-size: 12px; color: var(--text-light); }
+.step-label strong { color: var(--red); }
+
+/* === STEP CONTENT === */
+.step-content { flex: 1; padding: 20px; overflow-y: auto; }
+.step-view { display: none; }
+.step-view.active { display: block; }
+
+.step-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.step-num {
+  width: 44px; height: 44px;
+  background: var(--red);
+  color: white;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.step-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+.step-desc { font-size: 13px; color: var(--text-light); line-height: 1.5; }
+
+.info-box {
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.info-box.red { background: var(--red-light); border-left: 3px solid var(--red); color: #922B21; }
+.info-box.orange { background: var(--orange-light); border-left: 3px solid var(--orange); color: #784212; }
+.info-box.green { background: var(--green-light); border-left: 3px solid var(--green); color: #1E8449; }
+.info-box.blue { background: var(--blue-light); border-left: 3px solid var(--blue); color: #1A5276; }
+.info-box h4 { font-weight: 600; margin-bottom: 6px; font-size: 14px; }
+.info-box ul { padding-left: 16px; }
+.info-box li { margin-bottom: 4px; }
+
+/* PEP TIMER */
+.pep-timer-setup { background: white; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
+.pep-timer-setup label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 8px; color: var(--text); }
+.pep-timer-setup input[type="time"] {
+  width: 100%; padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px; font-size: 22px;
+  font-family: 'Sarabun', sans-serif;
+  color: var(--text);
+  text-align: center;
+}
+.timer-display {
+  background: var(--navy);
+  color: white;
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-md);
+}
+.timer-display.warning { background: linear-gradient(135deg, #E67E22, #D35400); }
+.timer-display.danger { background: linear-gradient(135deg, #C0392B, #922B21); }
+.timer-digits { font-size: 52px; font-weight: 700; letter-spacing: 2px; font-variant-numeric: tabular-nums; }
+.timer-label { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+.timer-status { margin-top: 12px; font-size: 14px; font-weight: 600; }
+
+.pep-location-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+  border-left: 3px solid var(--green);
+}
+.pep-location-card.orange { border-left-color: var(--orange); }
+.pep-location-card.red { border-left-color: var(--red); }
+.pep-loc-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.pep-loc-time { font-size: 12px; color: var(--text-light); margin-bottom: 8px; }
+.pep-loc-detail { font-size: 14px; color: var(--text); }
+.pep-phone-btn {
+  margin-top: 10px;
+  background: var(--navy);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Sarabun', sans-serif;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 600;
+}
+
+/* FORM STYLES */
+.form-section {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.form-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--gray-mid);
+}
+.form-row { margin-bottom: 14px; }
+.form-row label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px; }
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Sarabun', sans-serif;
+  color: var(--text);
+  background: white;
+  transition: border-color 0.2s;
+  appearance: none;
+}
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-color: var(--navy-mid);
+}
+.form-row textarea { resize: vertical; min-height: 80px; }
+.radio-group, .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+.radio-item, .checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.radio-item:has(input:checked),
+.checkbox-item:has(input:checked) {
+  border-color: var(--navy-mid);
+  background: var(--blue-light);
+}
+.radio-item input, .checkbox-item input { flex-shrink: 0; width: 16px; height: 16px; accent-color: var(--navy); }
+.req { color: var(--red); }
+.form-hint { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+
+/* CHECKLIST (AUDIT) */
+.audit-item {
+  background: white;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.audit-num {
+  width: 28px; height: 28px;
+  background: var(--gray-mid);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--text-light);
+}
+.audit-text { flex: 1; font-size: 14px; line-height: 1.4; }
+.audit-toggles { display: flex; gap: 6px; flex-shrink: 0; }
+.audit-btn {
+  padding: 5px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: 'Sarabun', sans-serif;
+  cursor: pointer;
+  background: white;
+  font-weight: 600;
+  transition: all 0.15s;
+  color: var(--text-light);
+}
+.audit-btn.yes.active { background: var(--green); border-color: var(--green); color: white; }
+.audit-btn.no.active { background: var(--red); border-color: var(--red); color: white; }
+.audit-btn.na.active { background: var(--gray); border-color: var(--gray); color: white; }
+
+/* SCORE CARD */
+.score-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  margin-bottom: 16px;
+}
+.score-ring {
+  width: 90px; height: 90px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  border: 6px solid var(--green);
+  color: var(--green);
+}
+.score-label { font-size: 14px; color: var(--text-light); }
+
+/* NAV BOTTOM */
+.bottom-nav {
+  display: flex;
+  padding: 12px 20px 20px;
+  gap: 10px;
+  background: white;
+  border-top: 1px solid var(--gray-mid);
+}
+.btn-prev, .btn-next {
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Sarabun', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+.btn-prev {
+  background: var(--gray-mid);
+  color: var(--text);
+  flex: 1;
+}
+.btn-next {
+  background: var(--navy);
+  color: white;
+  flex: 2;
+}
+.btn-next:hover { background: var(--navy-mid); }
+.btn-next.green { background: var(--green); }
+.btn-next.green:hover { background: #219A52; }
+.btn-submit {
+  width: 100%;
+  padding: 16px;
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Sarabun', sans-serif;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+.btn-submit:hover { background: #219A52; }
+
+/* SUCCESS */
+.success-screen {
+  text-align: center;
+  padding: 60px 24px;
+}
+.success-icon {
+  width: 80px; height: 80px;
+  background: var(--green-light);
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px;
+}
+.success-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.success-sub { font-size: 14px; color: var(--text-light); line-height: 1.6; margin-bottom: 28px; }
+.btn-home {
+  background: var(--navy);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Sarabun', sans-serif;
+  cursor: pointer;
+}
+
+/* TAGS */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 6px;
+}
+.tag.demo { background: #FFF3CD; color: #856404; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+</style>
+</head>
+<body>
+
+<!-- ========== HOME ========== -->
+<div class="screen active" id="screen-home">
+  <div class="home-header">
+    <div class="home-logo">🏥</div>
+    <div class="home-title">ระบบป้องกันการบาดเจ็บ<br>จากเข็มทิ่มและสารคัดหลั่ง</div>
+    <div class="home-sub">โรงพยาบาลชลบุรี • Chonburi Hospital</div>
+    <div class="home-badge">DEMO VERSION</div>
+  </div>
+  <div class="home-content">
+    <div class="home-section-label">เมนูหลัก</div>
+
+    <div class="menu-card danger" onclick="goTo('screen-incident')">
+      <div class="menu-icon danger">🚨</div>
+      <div class="menu-info">
+        <h3>แจ้งเหตุการณ์ใหม่</h3>
+        <p>คู่มือทีละขั้นตอน · PEP Timer · แบบฟอร์มรายงาน</p>
+      </div>
+      <div class="menu-arrow">›</div>
+    </div>
+
+    <div class="menu-card blue" onclick="goTo('screen-env')">
+      <div class="menu-icon blue">📋</div>
+      <div class="menu-info">
+        <h3>แบบสำรวจสภาพแวดล้อม</h3>
+        <p>สำหรับหัวหน้างาน · ปัจจัยเสี่ยงในหน่วยงาน</p>
+      </div>
+      <div class="menu-arrow">›</div>
+    </div>
+
+    <div class="menu-card green" onclick="goTo('screen-audit')">
+      <div class="menu-icon green">🔍</div>
+      <div class="menu-info">
+        <h3>Audit ความปลอดภัย</h3>
+        <p>ตรวจสอบพฤติกรรมขณะทำหัตถการ</p>
+      </div>
+      <div class="menu-arrow">›</div>
+    </div>
+
+    <div class="emergency-bar">
+      <span>⚡</span>
+      <span>เกิดเหตุฉุกเฉิน: <strong>ER โทร. 1669</strong> · ห้องยา โทร. <strong>038-917553</strong></span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCREEN 1: INCIDENT ========== -->
+<div class="screen" id="screen-incident">
+  <div class="topbar">
+    <button class="topbar-back" onclick="goHome()">←</button>
+    <div>
+      <div class="topbar-title">แจ้งเหตุการณ์ใหม่</div>
+      <div class="topbar-sub">HP-PCI-CBH-005 · แนวทางปฏิบัติ รพ.ชลบุรี</div>
+    </div>
+  </div>
+
+  <div class="step-progress">
+    <div class="step-dots" id="inc-dots"></div>
+    <div class="step-label" id="inc-step-label">ขั้นตอนที่ <strong>1</strong> จาก 6</div>
+  </div>
+
+  <div class="step-content">
+
+    <!-- ── STEP 1: First Aid by exposure type ── -->
+    <div class="step-view active" id="inc-step-1">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">ดูแลบาดแผล / บริเวณสัมผัส</div>
+          <div class="step-desc">ทำทันทีหลังได้รับบาดเจ็บ ก่อนทำอย่างอื่น</div>
+        </div>
+      </div>
+
+      <div style="background:#FFF8E1;border:1px solid #FFD54F;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#5D4037;">
+        ⚠️ <strong>เลือกประเภทการสัมผัสที่เกิดขึ้น</strong> เพื่อดูคำแนะนำที่ถูกต้อง
+      </div>
+
+      <!-- Exposure type selector -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;" id="exp-selector">
+        <div class="exp-card active" onclick="selectExp('needle')" id="exp-needle" style="background:white;border:2px solid var(--red);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;">
+          <div style="font-size:22px;margin-bottom:4px;">🩸</div>
+          <div style="font-size:11px;font-weight:700;color:var(--red);">เข็มทิ่ม/<br>มีดบาด</div>
+        </div>
+        <div class="exp-card" onclick="selectExp('skin')" id="exp-skin" style="background:white;border:2px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;">
+          <div style="font-size:22px;margin-bottom:4px;">🖐️</div>
+          <div style="font-size:11px;font-weight:700;color:var(--text-light);">สารกระเด็น<br>ผิวหนัง</div>
+        </div>
+        <div class="exp-card" onclick="selectExp('mucous')" id="exp-mucous" style="background:white;border:2px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;">
+          <div style="font-size:22px;margin-bottom:4px;">👁️</div>
+          <div style="font-size:11px;font-weight:700;color:var(--text-light);">สารกระเด็น<br>เยื่อเมือก/ตา</div>
+        </div>
+      </div>
+
+      <!-- Needle/blade -->
+      <div id="guide-needle">
+        <div class="info-box red">
+          <h4>🩸 เข็มทิ่ม / มีดบาด / ของมีคมทิ่มตำ</h4>
+          <ul>
+            <li>บีบให้เลือดออกเล็กน้อย <strong>ห้ามดูด</strong></li>
+            <li>ล้างน้ำไหลและสบู่ <strong>≥ 5 นาที</strong></li>
+            <li>เช็ดด้วย 70% alcohol หรือทา povidone-iodine</li>
+          </ul>
+        </div>
+        <div class="info-box orange">
+          <h4>⏱️ เวลาสำคัญที่สุด</h4>
+          PEP มีประสิทธิภาพสูงสุดถ้าเริ่มภายใน <strong>2 ชั่วโมง</strong> และต้องเริ่มภายใน <strong>72 ชั่วโมง</strong>
+        </div>
+      </div>
+
+      <!-- Skin splash -->
+      <div id="guide-skin" style="display:none;">
+        <div class="info-box blue">
+          <h4>🖐️ เลือด/สารคัดหลั่งกระเด็นผิวหนัง</h4>
+          <ul>
+            <li>ล้างด้วยน้ำสะอาดปริมาณมาก ๆ</li>
+            <li>เช็ดด้วย 70% alcohol หรือทา povidone-iodine</li>
+            <li>หากมีบาดแผลเปิด ให้บีบเลือดออกก่อนล้าง</li>
+          </ul>
+        </div>
+        <div class="info-box green">
+          <h4>📝 หมายเหตุ</h4>
+          ผิวหนังที่ไม่มีบาดแผล ความเสี่ยงต่ำมาก แต่ยังต้องรายงานและประเมินต่อ
+        </div>
+      </div>
+
+      <!-- Mucous/eye -->
+      <div id="guide-mucous" style="display:none;">
+        <div class="info-box blue">
+          <h4>👁️ เลือด/สารคัดหลั่งกระเด็นตา/ปาก/จมูก</h4>
+          <ul>
+            <li><strong>ตา:</strong> ล้างด้วย NSS หรือน้ำสะอาด <strong>≥ 15 นาที</strong> ทันที อย่าขยี้ตา</li>
+            <li><strong>ปาก:</strong> บ้วนน้ำสะอาดหลายครั้ง ห้ามกลืน ถุยทิ้ง</li>
+            <li><strong>จมูก:</strong> ล้างด้วยน้ำสะอาดปริมาณมาก</li>
+          </ul>
+        </div>
+        <div class="info-box orange">
+          <h4>⏱️ เวลาสำคัญที่สุด</h4>
+          ล้างทันทีแล้วไปพบแพทย์ ER โดยเร็ว เพื่อประเมิน PEP
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 2: Notify + Blood draw ── -->
+    <div class="step-view" id="inc-step-2">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">แจ้งหัวหน้างาน & ควบคุมโรค</div>
+          <div class="step-desc">แจ้งทันทีหลังล้างแผลเสร็จ</div>
+        </div>
+      </div>
+
+      <div class="info-box red">
+        <h4>📢 แจ้งผู้เกี่ยวข้องทันที</h4>
+        <ul>
+          <li>แจ้ง <strong>หัวหน้าหน่วยงาน / หัวหน้าเวร</strong> ในทันที</li>
+          <li>แจ้ง <strong>ทีมควบคุมการติดเชื้อ (ICN)</strong> โทร. <strong>038-917500 ต่อ XXXX</strong></li>
+        </ul>
+      </div>
+
+      <div class="info-box blue">
+        <h4>🩸 เจาะเลือด Baseline ทันที</h4>
+        <ul>
+          <li>ส่งเลือดตรวจ <strong>Anti-HIV, HBsAg, Anti-HCV</strong> ของตนเอง (baseline)</li>
+          <li>หากทราบ source patient — ขอตรวจ HIV, HBV, HCV ของผู้ป่วยด้วย</li>
+          <li>กรณีไม่ทราบผล / ไม่มีผลเลือด source — ถือว่าเสี่ยงสูงไว้ก่อน</li>
+        </ul>
+      </div>
+
+      <div class="info-box orange">
+        <h4>⚠️ หมายเหตุสำคัญ (HP-PCI-CBH-005)</h4>
+        เจาะเลือด Anti-HIV ทั้งผู้ป่วยและบุคลากรในครั้งแรก <strong>กรณีไม่ทราบผลเลือด</strong>
+      </div>
+    </div>
+
+    <!-- ── STEP 3: See ER doctor + PEP decision ── -->
+    <div class="step-view" id="inc-step-3">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">พบแพทย์ ER & ประเมิน PEP</div>
+          <div class="step-desc">พบแพทย์ทันทีเพื่อรับยาต้านไวรัส ถ้าจำเป็น</div>
+        </div>
+      </div>
+
+      <!-- PEP Timer -->
+      <div class="pep-timer-setup">
+        <label>⏰ กรอกเวลาที่เกิดเหตุ</label>
+        <input type="time" id="injury-time" onchange="updateTimer()">
+        <div class="form-hint">ระบบคำนวณเวลาที่เหลือก่อน PEP window ปิด (72 ชม.)</div>
+      </div>
+      <div class="timer-display" id="timer-display">
+        <div class="timer-digits" id="timer-digits">--:--:--</div>
+        <div class="timer-label">เวลาที่เหลือก่อน PEP window ปิด</div>
+        <div class="timer-status" id="timer-status"></div>
+      </div>
+
+      <!-- Where to go -->
+      <div style="font-size:13px;font-weight:700;color:var(--text-light);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;">สถานที่พบแพทย์</div>
+      <div class="pep-location-card">
+        <div class="pep-loc-title">🏥 คลินิกอาชีวเวชศาสตร์</div>
+        <div class="pep-loc-time">จันทร์–ศุกร์ · 07:30–16:00 น.</div>
+        <div class="pep-loc-detail">ชั้น 2 อาคารผู้ป่วยนอก · โทร. 038-917500 ต่อ 1234</div>
+        <button class="pep-phone-btn">📞 โทรตอนนี้</button>
+      </div>
+      <div class="pep-location-card orange">
+        <div class="pep-loc-title">🚨 ห้องฉุกเฉิน (ER) — นอกเวลาราชการ / วันหยุด</div>
+        <div class="pep-loc-time">เปิด 24 ชั่วโมง ทุกวัน</div>
+        <div class="pep-loc-detail">ชั้น 1 อาคารอุบัติเหตุและฉุกเฉิน · โทร. 038-917553</div>
+        <button class="pep-phone-btn">📞 โทรตอนนี้</button>
+      </div>
+
+      <!-- PEP Decision tree — interactive -->
+      <div style="font-size:13px;font-weight:700;color:var(--text-light);margin:16px 0 10px;text-transform:uppercase;letter-spacing:0.05em;">แนวทางการรับยาต้านไวรัส (HP-PCI-CBH-005)</div>
+
+      <div style="background:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;">
+        <div style="font-size:13px;font-weight:600;margin-bottom:12px;">สถานะ HIV ของ Source Patient คือ?</div>
+        <div style="display:flex;flex-direction:column;gap:8px;" id="hiv-selector">
+          <button onclick="selectHIV('pos')" id="hbtn-pos" style="text-align:left;padding:12px 14px;border-radius:10px;border:2px solid var(--border);background:white;font-size:14px;font-family:inherit;cursor:pointer;transition:all 0.15s;">
+            🔴 <strong>HIV Positive</strong> — ทราบว่าติดเชื้อแน่ชัด
+          </button>
+          <button onclick="selectHIV('neg1')" id="hbtn-neg1" style="text-align:left;padding:12px 14px;border-radius:10px;border:2px solid var(--border);background:white;font-size:14px;font-family:inherit;cursor:pointer;transition:all 0.15s;">
+            🟡 <strong>HIV Negative 1 ครั้ง</strong> — หรือไม่ทราบผลเลือด
+          </button>
+          <button onclick="selectHIV('neg2')" id="hbtn-neg2" style="text-align:left;padding:12px 14px;border-radius:10px;border:2px solid var(--border);background:white;font-size:14px;font-family:inherit;cursor:pointer;transition:all 0.15s;">
+            🟢 <strong>HIV Negative 2 ครั้ง</strong> — หรือ Admit &gt;14 วัน
+          </button>
+        </div>
+      </div>
+
+      <!-- Pop-up recommendation panel -->
+      <div id="pep-recommendation" style="display:none;margin-top:14px;animation:fadeIn 0.3s ease;">
+
+        <!-- HIV Positive recommendation -->
+        <div id="pep-rec-pos" style="display:none;">
+          <div style="background:var(--red-light);border:2px solid var(--red);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:var(--red);padding:12px 16px;display:flex;align-items:center;gap:8px;">
+              <span style="font-size:20px;">🚨</span>
+              <span style="color:white;font-size:15px;font-weight:700;">Source HIV Positive → ต้องรับยาทันที</span>
+            </div>
+            <div style="padding:16px;">
+              <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;">
+                <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">1</div>
+                <div style="font-size:14px;color:#922B21;"><strong>ส่งปรึกษาแพทย์ ID ทุกกรณี</strong><br><span style="font-size:12px;">โทร. 038-917500 ต่อ XXXX (ID Clinic)</span></div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;">
+                <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">2</div>
+                <div style="font-size:14px;color:#922B21;"><strong>รับยา TLD (Tenofovir + Lamivudine + Dolutegravir) 1 เม็ด/วัน</strong><br><span style="font-size:12px;">รับประทานต่อเนื่อง <strong>28 วัน</strong> ห้ามหยุดยาเอง</span></div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;">
+                <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">3</div>
+                <div style="font-size:14px;color:#922B21;"><strong>เริ่มยาให้เร็วที่สุด</strong> ภายใน 2 ชม. มีประสิทธิภาพสูงสุด<br><span style="font-size:12px;">ต้องเริ่มภายใน 72 ชม. หลังสัมผัส</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="background:#F3E5F5;border-left:3px solid #7B1FA2;border-radius:8px;padding:12px 14px;margin-top:10px;font-size:13px;color:#4A148C;">
+            🩺 <strong>ต้องพบแพทย์เสมอ</strong> เพื่อประเมินผลข้างเคียงและปรับยาถ้าจำเป็น
+          </div>
+        </div>
+
+        <!-- HIV Negative 1 recommendation -->
+        <div id="pep-rec-neg1" style="display:none;">
+          <div style="background:#FEF5E7;border:2px solid var(--orange);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:var(--orange);padding:12px 16px;display:flex;align-items:center;gap:8px;">
+              <span style="font-size:20px;">⚠️</span>
+              <span style="color:white;font-size:15px;font-weight:700;">Source HIV Negative 1 ครั้ง / ไม่ทราบผล → ประเมินร่วมกับแพทย์</span>
+            </div>
+            <div style="padding:16px;">
+              <div style="font-size:13px;font-weight:700;color:#784212;margin-bottom:10px;">เลือกตามสถานการณ์ :</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div style="background:var(--green-light);border:1.5px solid var(--green);border-radius:10px;padding:12px;">
+                  <div style="font-size:12px;font-weight:700;color:#1E8449;margin-bottom:6px;">✅ ให้ยา TLD 28 วัน</div>
+                  <div style="font-size:12px;color:#1E8449;">กรณีไม่ทราบผลเลือด source หรือมีปัจจัยเสี่ยงสูง</div>
+                </div>
+                <div style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:10px;padding:12px;">
+                  <div style="font-size:12px;font-weight:700;color:var(--text-light);margin-bottom:6px;">⏸️ ไม่ต้องให้ยา</div>
+                  <div style="font-size:12px;color:var(--text-light);">กรณีผู้รับสัมผัสยอมรับความเสี่ยงได้ และ source ผล neg ชัดเจน</div>
+                </div>
+              </div>
+              <div style="margin-top:12px;padding:10px 12px;background:#FFF3E0;border-radius:8px;font-size:12px;color:#784212;">
+                💊 <strong>หมายเหตุ:</strong> ปรึกษาแพทย์ ER เพื่อตัดสินใจร่วมกัน — พิจารณาจากชนิดการสัมผัส ปริมาณเลือด และ VL ของผู้ป่วย
+              </div>
+            </div>
+          </div>
+          <div style="background:#F3E5F5;border-left:3px solid #7B1FA2;border-radius:8px;padding:12px 14px;margin-top:10px;font-size:13px;color:#4A148C;">
+            🩺 <strong>ควรพบแพทย์</strong> เพื่อประเมิน HIV/HCV/HBV และวางแผน follow-up
+          </div>
+        </div>
+
+        <!-- HIV Negative 2 recommendation -->
+        <div id="pep-rec-neg2" style="display:none;">
+          <div style="background:#EAFAF1;border:2px solid var(--green);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:var(--green);padding:12px 16px;display:flex;align-items:center;gap:8px;">
+              <span style="font-size:20px;">✅</span>
+              <span style="color:white;font-size:15px;font-weight:700;">Source HIV Negative 2 ครั้ง / Admit &gt;14 วัน</span>
+            </div>
+            <div style="padding:16px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:10px;padding:12px;">
+                  <div style="font-size:12px;font-weight:700;color:var(--text-light);margin-bottom:6px;">⏸️ ปกติ: ไม่ต้องให้ยาต้านไวรัส</div>
+                  <div style="font-size:12px;color:var(--text-light);">ความเสี่ยงติดเชื้อ HIV ต่ำมาก</div>
+                </div>
+                <div style="background:var(--green-light);border:1.5px solid var(--green);border-radius:10px;padding:12px;">
+                  <div style="font-size:12px;font-weight:700;color:#1E8449;margin-bottom:6px;">💊 ถ้าเจ้าหน้าที่มีความกังวล</div>
+                  <div style="font-size:12px;color:#1E8449;">→ พบแพทย์เพื่อพิจารณา TLD 28 วัน</div>
+                </div>
+              </div>
+              <div style="margin-top:12px;padding:10px 12px;background:#EAFAF1;border-radius:8px;font-size:12px;color:#1E8449;">
+                ✔️ ยังต้องรายงาน ตรวจเลือด baseline และ follow-up ตามปกติ
+              </div>
+            </div>
+          </div>
+          <div style="background:#EBF5FB;border-left:3px solid var(--blue);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:13px;color:#1A5276;">
+            🩺 <strong>กรณีที่ยังต้องพบแพทย์:</strong> Source HCV+, Syphilis+, HBsAg+ (เจ้าหน้าที่ Anti-HBs ต่ำ), มีโรคประจำตัว, หรือกังวลผลข้างเคียงยา
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── STEP 4: Blood test & report writing ── -->
+    <div class="step-view" id="inc-step-4">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">เจาะเลือดตรวจ & เขียนรายงาน</div>
+          <div class="step-desc">ดำเนินการหลังพบแพทย์และรับ PEP แล้ว</div>
+        </div>
+      </div>
+
+      <div class="info-box blue">
+        <h4>🧪 เจาะเลือดตรวจหาเชื้อ (Source Patient)</h4>
+        <ul>
+          <li>Anti-HIV · HBsAg · Anti-HCV ของ source patient (ถ้ายังไม่มีผล)</li>
+          <li>กรณีไม่ทราบสถานะ source — ถือว่าเสี่ยงสูงเพื่อความปลอดภัย</li>
+        </ul>
+      </div>
+
+      <div class="info-box orange">
+        <h4>📝 เขียนบันทึกรายงานเหตุการณ์</h4>
+        <ul>
+          <li>กรอกแบบบันทึกรายงานอุบัติเหตุ/เหตุการณ์ไม่พึงประสงค์ของ รพ.</li>
+          <li>ส่งให้หัวหน้าหน่วยงานลงนาม</li>
+          <li>ส่ง ICN (Infection Control Nurse) เพื่อรับทราบ</li>
+        </ul>
+      </div>
+
+      <div class="info-box green">
+        <h4>✅ ให้แพทย์ตรวจเลือด ส่ง ICN เพื่อรับคำปรึกษา</h4>
+        <ul>
+          <li>ICN จะให้คำปรึกษาเพิ่มเติม และประสานงานแพทย์เฉพาะทาง</li>
+          <li>รับแนวปฏิบัติด้านไวรัสสำหรับ HBV, HCV ตามผลเลือด</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── STEP 5: Questionnaire ── -->
+    <div class="step-view" id="inc-step-5">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div>
+          <div class="step-title">แบบรายงานการได้รับอุบัติเหตุขณะปฏิบัติงาน</div>
+          <div class="step-desc">กรอกข้อมูลให้ครบถ้วน บันทึกเข้าระบบอัตโนมัติ</div>
+        </div>
+      </div>
+
+      <!-- ส่วน A: ข้อมูลผู้รายงาน -->
+      <div class="form-section">
+        <div class="form-section-title">ก. ข้อมูลผู้ได้รับบาดเจ็บ</div>
+        <div class="two-col">
+          <div class="form-row">
+            <label>ชื่อ–นามสกุล <span class="req">*</span></label>
+            <input type="text" placeholder="ชื่อ-สกุล">
+          </div>
+          <div class="form-row">
+            <label>HN (รหัสผู้ป่วย) <span class="req">*</span></label>
+            <input type="text" placeholder="เช่น 62021642">
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="form-row">
+            <label>อายุ (ปี)</label>
+            <input type="number" placeholder="เช่น 27" min="18" max="70">
+          </div>
+          <div class="form-row">
+            <label>เพศ</label>
+            <select>
+              <option value="">เลือก...</option>
+              <option>ชาย</option>
+              <option>หญิง</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>เบอร์โทรศัพท์ที่ติดต่อได้ <span class="req">*</span></label>
+          <input type="tel" placeholder="08x-xxx-xxxx">
+        </div>
+        <div class="two-col">
+          <div class="form-row">
+            <label>ตำแหน่ง <span class="req">*</span></label>
+            <select>
+              <option value="">เลือก...</option>
+              <option>พยาบาลวิชาชีพ</option>
+              <option>แพทย์ staff</option>
+              <option>แพทย์ resident / intern</option>
+              <option>นักศึกษาแพทย์</option>
+              <option>นักศึกษาแพทย์ Extern</option>
+              <option>นักศึกษาพยาบาล</option>
+              <option>ผู้ช่วยเหลือคนไข้</option>
+              <option>Lab / นักเทคนิคการแพทย์</option>
+              <option>พนักงานทำความสะอาด</option>
+              <option>เภสัชกร</option>
+              <option>หน่วยสนับสนุนอื่นๆ</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>อายุงาน <span class="req">*</span></label>
+            <select>
+              <option value="">เลือก...</option>
+              <option>0–1 ปี</option>
+              <option>1–3 ปี</option>
+              <option>3–5 ปี</option>
+              <option>มากกว่า 5 ปี</option>
+            </select>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="form-row">
+            <label>หอผู้ป่วย / สถานที่เกิดเหตุ <span class="req">*</span></label>
+            <input type="text" placeholder="เช่น ICU Trauma, ER, OR, สก.3">
+          </div>
+          <div class="form-row">
+            <label>PCT (สถานที่เกิดเหตุ)</label>
+            <input type="text" placeholder="กรอกชื่อ PCT (ถ้ามี)">
+          </div>
+        </div>
+      </div>
+
+      <!-- ส่วน B: รายละเอียดเหตุการณ์ -->
+      <div class="form-section">
+        <div class="form-section-title">ข. รายละเอียดเหตุการณ์</div>
+        <div class="two-col">
+          <div class="form-row">
+            <label>วันที่เกิดเหตุ <span class="req">*</span></label>
+            <input type="date">
+          </div>
+          <div class="form-row">
+            <label>เวลาที่เกิดเหตุ <span class="req">*</span></label>
+            <input type="time">
+          </div>
+        </div>
+        <div class="form-row">
+          <label>ช่วงเวลาที่เกิดเหตุ (Shift) <span class="req">*</span></label>
+          <div class="radio-group" style="flex-direction:row;flex-wrap:wrap;gap:6px;">
+            <label class="radio-item" style="flex:1;min-width:140px;"><input type="radio" name="shift" value="d"> 08:00–16:00</label>
+            <label class="radio-item" style="flex:1;min-width:140px;"><input type="radio" name="shift" value="e"> 16:00–24:00</label>
+            <label class="radio-item" style="flex:1;min-width:140px;"><input type="radio" name="shift" value="n"> 00:00–08:00</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>ลักษณะอุบัติเหตุที่ได้รับ <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="injury-type" value="needle"> ถูกเข็ม / ของมีคมตำ (Percutaneous injury)</label>
+            <label class="radio-item"><input type="radio" name="injury-type" value="nonintact"> ผิวหนังที่มีบาดแผลสัมผัสสารคัดหลั่ง (Non-intact skin exposure)</label>
+            <label class="radio-item"><input type="radio" name="injury-type" value="mucosal"> เยื่อบุต่างๆ สัมผัสสารคัดหลั่ง (Mucosal exposure)</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>กิจกรรมที่ปฏิบัติขณะเกิดเหตุ <span class="req">*</span></label>
+          <select>
+            <option value="">เลือก...</option>
+            <option>เจาะเลือด / เจาะ DTX / เจาะ Hct</option>
+            <option>ฉีดยา / ให้สารน้ำ</option>
+            <option>ทำผ่าตัด / ช่วยผ่าตัด</option>
+            <option>เย็บแผล</option>
+            <option>ตัดไหม</option>
+            <option>ทำคลอด / ช่วยทำคลอด</option>
+            <option>แทง C-line / เจาะหลัง / เจาะปอด</option>
+            <option>ทำหัตถการ / ช่วยทำหัตถการ</option>
+            <option>สวมปลอกเข็มกลับ</option>
+            <option>เก็บอุปกรณ์ / เก็บขยะ</option>
+            <option>ผู้ป่วยไม่ให้ความร่วมมือ / ผู้ป่วยสับสน</option>
+            <option>สารคัดหลั่งกระเด็น</option>
+            <option>ชันสูตรศพ</option>
+            <option>อุปกรณ์ตกใส่</option>
+            <option>อื่นๆ (ระบุในช่องหมายเหตุ)</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>รายละเอียดกิจกรรม (ถ้าเลือกอื่นๆ หรือต้องการอธิบายเพิ่ม)</label>
+          <input type="text" placeholder="เช่น แทง DLC, ฝึกพูด, ช่วยจับผู้ป่วย agitate...">
+        </div>
+        <div class="form-row">
+          <label>ส่วนของร่างกายที่ได้รับอุบัติเหตุ <span class="req">*</span></label>
+          <div class="checkbox-group" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <label class="checkbox-item"><input type="checkbox" name="body"> มือ</label>
+            <label class="checkbox-item"><input type="checkbox" name="body"> ตา</label>
+            <label class="checkbox-item"><input type="checkbox" name="body"> แขน</label>
+            <label class="checkbox-item"><input type="checkbox" name="body"> ปาก / หน้า</label>
+            <label class="checkbox-item"><input type="checkbox" name="body"> เท้า</label>
+            <label class="checkbox-item"><input type="checkbox" name="body"> ผิวหนังมีบาดแผล</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>อุปกรณ์ป้องกัน (PPE) ที่สวมใส่ขณะเกิดเหตุ</label>
+          <div class="checkbox-group" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <label class="checkbox-item"><input type="checkbox" name="ppe"> ถุงมือ</label>
+            <label class="checkbox-item"><input type="checkbox" name="ppe"> Mask</label>
+            <label class="checkbox-item"><input type="checkbox" name="ppe"> แว่นตา / Goggles</label>
+            <label class="checkbox-item"><input type="checkbox" name="ppe"> Face shield</label>
+            <label class="checkbox-item"><input type="checkbox" name="ppe"> หมวก</label>
+            <label class="checkbox-item"><input type="checkbox" name="ppe"> กาวน์ / เอื้ยม</label>
+            <label class="checkbox-item"><input type="checkbox" name="ppe"> บูท</label>
+            <label class="checkbox-item"><input type="checkbox" name="ppe"> ไม่ได้ใส่อุปกรณ์ใดเลย</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ส่วน C: ข้อมูล Source Patient -->
+      <div class="form-section">
+        <div class="form-section-title">ค. ข้อมูลแหล่งเลือด / สารคัดหลั่ง (Source Patient)</div>
+        <div class="form-row">
+          <label>แหล่งเลือด/สารคัดหลั่ง ติดเชื้อ HIV หรือไม่? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="src-hiv" value="pos"> ติดเชื้อ (HIV Positive)</label>
+            <label class="radio-item"><input type="radio" name="src-hiv" value="neg"> ไม่ติดเชื้อ (HIV Negative)</label>
+            <label class="radio-item"><input type="radio" name="src-hiv" value="unknown"> ไม่ทราบ</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>แหล่งเลือด/สารคัดหลั่ง ติดเชื้อ HCV หรือไม่?</label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="src-hcv" value="pos"> ติดเชื้อ</label>
+            <label class="radio-item"><input type="radio" name="src-hcv" value="neg"> ไม่ติดเชื้อ</label>
+            <label class="radio-item"><input type="radio" name="src-hcv" value="unknown"> ไม่ทราบ</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>แหล่งเลือด/สารคัดหลั่ง ติดเชื้อ HBV หรือไม่?</label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="src-hbv" value="pos"> ติดเชื้อ</label>
+            <label class="radio-item"><input type="radio" name="src-hbv" value="neg"> ไม่ติดเชื้อ</label>
+            <label class="radio-item"><input type="radio" name="src-hbv" value="unknown"> ไม่ทราบ</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ส่วน D: การจัดการ -->
+      <div class="form-section">
+        <div class="form-section-title">ง. การจัดการหลังเกิดเหตุ</div>
+        <div class="form-row">
+          <label>เจ้าหน้าที่มีภูมิต้านทานตับอักเสบ B (Anti-HBs) หรือไม่? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="hbv-imm" value="yes"> มี (Anti-HBs ≥ 10)</label>
+            <label class="radio-item"><input type="radio" name="hbv-imm" value="no"> ไม่มี</label>
+            <label class="radio-item"><input type="radio" name="hbv-imm" value="unknown"> ไม่ทราบ</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>ระยะเวลาที่ได้รับยาป้องกันการติดเชื้อ (PEP) ครั้งแรก <span class="req">*</span></label>
+          <select>
+            <option value="">เลือก...</option>
+            <option>น้อยกว่า 1 ชั่วโมง หลังประสบเหตุ</option>
+            <option>1–3 ชั่วโมง หลังประสบเหตุ</option>
+            <option>3–24 ชั่วโมง หลังประสบเหตุ</option>
+            <option>24–72 ชั่วโมง หลังประสบเหตุ</option>
+            <option>เกิน 72 ชั่วโมง หลังประสบเหตุ</option>
+            <option>ไม่ได้รับยา PEP</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ส่วน E: สาเหตุ -->
+      <div class="form-section">
+        <div class="form-section-title">จ. สาเหตุการเกิดอุบัติเหตุครั้งนี้ (เลือกได้หลายข้อ)</div>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox"> ด้านทักษะและประสบการณ์ (เพิ่งเริ่มทำงาน / ไม่ค่อยได้ฝึก)</label>
+          <label class="checkbox-item"><input type="checkbox"> การใช้อุปกรณ์ป้องกันส่วนบุคคล (ไม่ได้สวมใส่ / ไม่เหมาะสม)</label>
+          <label class="checkbox-item"><input type="checkbox"> ปัจจัยจากผู้ป่วย (ผู้ป่วยไม่ให้ความร่วมมือ / ขยับตัวกะทันหัน)</label>
+          <label class="checkbox-item"><input type="checkbox"> สภาพแวดล้อมในการทำงาน (พื้นที่คับแคบ / แสงสว่างไม่เพียงพอ)</label>
+          <label class="checkbox-item"><input type="checkbox"> ภาระงานและความเร่งรีบ (งานมาก / เวลาจำกัด)</label>
+          <label class="checkbox-item"><input type="checkbox"> สภาพร่างกาย (อ่อนเพลีย / ง่วงนอน / ไม่สบาย)</label>
+          <label class="checkbox-item"><input type="checkbox"> สภาพจิตใจและอารมณ์ (เครียด / เหนื่อยใจ / สับสน)</label>
+          <label class="checkbox-item"><input type="checkbox"> เครื่องมือวางไม่เป็นระเบียบ / ของมีคมปะปน</label>
+          <label class="checkbox-item"><input type="checkbox"> ปัจจัยจากเพื่อนร่วมงาน (เคลื่อนไหวใกล้กัน / วางของมีคมไม่เหมาะสม)</label>
+          <label class="checkbox-item"><input type="checkbox"> การใช้งานอุปกรณ์ไม่ตรงตามวิธีที่แนะนำ</label>
+          <label class="checkbox-item"><input type="checkbox"> สมาธิระหว่างทำงาน (มีสิ่งรบกวน / พูดคุยเรื่องอื่น)</label>
+          <label class="checkbox-item"><input type="checkbox"> ละเมิดข้อกำหนด / ประมาทขาดความระมัดระวัง</label>
+          <label class="checkbox-item"><input type="checkbox"> สถานการณ์เร่งรีบฉุกเฉิน</label>
+        </div>
+        <div class="form-row" style="margin-top:10px;">
+          <label>รายละเอียดสาเหตุเพิ่มเติม</label>
+          <textarea placeholder="อธิบายสภาพการณ์ที่คิดว่าทำให้เกิดเหตุ เช่น ผู้ป่วยดิ้น ไม่มี sharp container ใกล้มือ รีบเร่ง..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 6: Follow-up plan + submit ── -->
+    <div class="step-view" id="inc-step-6">
+      <div class="step-header">
+        <div class="step-num" style="background:var(--green);">✓</div>
+        <div>
+          <div class="step-title">แผนติดตามผลเลือด & ส่งข้อมูล</div>
+          <div class="step-desc">ติดตามผล Anti-HIV ตามระยะเวลาที่กำหนด</div>
+        </div>
+      </div>
+
+      <div style="background:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:14px;">📅 ตารางติดตามผลเลือด Anti-HIV (HP-PCI-CBH-005)</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--red-light);border-radius:8px;">
+            <div style="width:40px;height:40px;background:var(--red);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;flex-shrink:0;text-align:center;line-height:1.2;">วัน<br>0</div>
+            <div><div style="font-size:14px;font-weight:700;">เจาะเลือด Baseline</div><div style="font-size:12px;color:#922B21;">Anti-HIV · HBsAg · Anti-HCV (ของตนเอง)</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--orange-light);border-radius:8px;">
+            <div style="width:40px;height:40px;background:var(--orange);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:700;flex-shrink:0;text-align:center;line-height:1.2;">เดือน<br>1</div>
+            <div><div style="font-size:14px;font-weight:700;">ติดตาม Anti-HIV ครั้งที่ 1</div><div style="font-size:12px;color:#784212;">นัดตรวจที่คลินิกอาชีวเวชศาสตร์</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--green-light);border-radius:8px;">
+            <div style="width:40px;height:40px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:11px;font-weight:700;flex-shrink:0;text-align:center;line-height:1.2;">เดือน<br>3</div>
+            <div><div style="font-size:14px;font-weight:700;">ติดตาม Anti-HIV ครั้งที่ 2</div><div style="font-size:12px;color:#1E8449;">นัดตรวจที่คลินิกอาชีวเวชศาสตร์ · ตรวจ HCV ด้วยถ้าจำเป็น</div></div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:var(--text-light);background:var(--gray-light);border-radius:8px;padding:10px 12px;">
+          ⚠️ <strong>หมายเหตุ:</strong> ปฏิบัติตามระเบียบแนวทางการปฏิบัติงานของ พ.ร.บ. 2540 หาก Anti-HIV ติดเชื้อ
+        </div>
+      </div>
+
+      <div class="info-box green">
+        <h4>✅ ขั้นตอนที่ควรดำเนินการเสร็จแล้ว</h4>
+        <ul>
+          <li>ล้างบาดแผล / บริเวณสัมผัสเรียบร้อย</li>
+          <li>แจ้งหัวหน้าและ ICN แล้ว</li>
+          <li>พบแพทย์ ER / คลินิกอาชีวเวชศาสตร์แล้ว</li>
+          <li>เจาะเลือด baseline แล้ว</li>
+          <li>เขียนรายงานเหตุการณ์แล้ว</li>
+        </ul>
+      </div>
+
+      <button class="btn-submit" id="btn-submit-incident" onclick="submitIncident()">📤 ส่งข้อมูลไปยัง Google Sheets</button>
+      <div class="form-hint" style="text-align:center;margin-top:8px;">
+        * บันทึกลง Google Sheet: "Incident Log" และส่ง Email แจ้ง ICN อัตโนมัติ
+      </div>
+    </div>
+
+  </div><!-- end step-content -->
+
+  <div class="bottom-nav">
+    <button class="btn-prev" id="inc-prev" onclick="incStep(-1)">← ก่อนหน้า</button>
+    <button class="btn-next" id="inc-next" onclick="incStep(1)">ถัดไป →</button>
+  </div>
+</div>
+
+<!-- ========== SCREEN 2: ENVIRONMENT SURVEY ========== -->
+<div class="screen" id="screen-env">
+  <div class="topbar">
+    <button class="topbar-back" onclick="goHome()">←</button>
+    <div>
+      <div class="topbar-title">แบบประเมินสภาพแวดล้อม</div>
+      <div class="topbar-sub">ด้านป้องกัน Needlestick &amp; Body Fluid Exposure</div>
+    </div>
+  </div>
+
+  <div class="step-content" style="padding-top:20px">
+
+    <!-- Score legend -->
+    <div style="background:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;margin-bottom:16px;">
+      <div style="font-size:12px;font-weight:700;color:var(--text-light);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;">เกณฑ์คะแนน</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center;">
+        <div style="background:#FDECEA;border-radius:8px;padding:8px 4px;"><div style="font-size:18px;font-weight:700;color:var(--red);">0</div><div style="font-size:10px;color:#922B21;">ไม่ผ่าน / ไม่มี</div></div>
+        <div style="background:#FEF5E7;border-radius:8px;padding:8px 4px;"><div style="font-size:18px;font-weight:700;color:var(--orange);">1</div><div style="font-size:10px;color:#784212;">ผ่านบางส่วน</div></div>
+        <div style="background:#EBF5FB;border-radius:8px;padding:8px 4px;"><div style="font-size:18px;font-weight:700;color:var(--blue);">2</div><div style="font-size:10px;color:#1A5276;">ผ่านส่วนใหญ่</div></div>
+        <div style="background:#EAFAF1;border-radius:8px;padding:8px 4px;"><div style="font-size:18px;font-weight:700;color:var(--green);">3</div><div style="font-size:10px;color:#1E8449;">ผ่านสมบูรณ์</div></div>
+      </div>
+    </div>
+
+    <!-- Header info -->
+    <div class="form-section">
+      <div class="form-section-title">ข้อมูลผู้ประเมิน</div>
+      <div class="two-col">
+        <div class="form-row">
+          <label>แผนก / หน่วยงาน <span class="req">*</span></label>
+          <select>
+            <option value="">เลือก...</option>
+            <option>ICU</option><option>ER</option><option>OPD</option>
+            <option>ตึกศัลยกรรม</option><option>ตึกอายุรกรรม</option>
+            <option>ห้องผ่าตัด</option><option>ห้องคลอด</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>วันที่ประเมิน <span class="req">*</span></label>
+          <input type="date">
+        </div>
+      </div>
+      <div class="form-row">
+        <label>ผู้ประเมิน <span class="req">*</span></label>
+        <input type="text" placeholder="ชื่อ-นามสกุล หรือรหัสพนักงาน">
+      </div>
+    </div>
+
+    <!-- หมวด 1: Sharps container -->
+    <div class="form-section">
+      <div class="form-section-title">1. ถังทิ้งของมีคม (Sharps Container)</div>
+      <div id="env-group-1"></div>
+    </div>
+
+    <!-- หมวด 2: Needle management -->
+    <div class="form-section">
+      <div class="form-section-title">2. การจัดการเข็ม (Needle Management)</div>
+      <div id="env-group-2"></div>
+    </div>
+
+    <!-- หมวด 3: PPE -->
+    <div class="form-section">
+      <div class="form-section-title">3. ความพร้อมใช้งานของอุปกรณ์ป้องกัน (PPE Availability)</div>
+      <div id="env-group-3"></div>
+    </div>
+
+    <!-- หมวด 4: Environment -->
+    <div class="form-section">
+      <div class="form-section-title">4. สภาพแวดล้อมและแสงสว่าง</div>
+      <div id="env-group-4"></div>
+    </div>
+
+    <!-- หมวด 5: Documents -->
+    <div class="form-section">
+      <div class="form-section-title">5. ระบบแจ้งเตือนและเอกสาร ณ จุดปฏิบัติงาน</div>
+      <div id="env-group-5"></div>
+    </div>
+
+    <!-- Total score -->
+    <div style="background:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:14px;">คะแนนรวมและระดับความเสี่ยง</div>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;">
+        <div style="text-align:center;flex:1;">
+          <div style="font-size:36px;font-weight:700;color:var(--navy);" id="env-score-num">0</div>
+          <div style="font-size:12px;color:var(--text-light);">คะแนนที่ได้</div>
+        </div>
+        <div style="font-size:24px;color:var(--border);">/</div>
+        <div style="text-align:center;flex:1;">
+          <div style="font-size:36px;font-weight:700;color:var(--text-light);">39</div>
+          <div style="font-size:12px;color:var(--text-light);">คะแนนเต็ม</div>
+        </div>
+        <div style="font-size:24px;color:var(--border);">=</div>
+        <div style="text-align:center;flex:1;">
+          <div style="font-size:36px;font-weight:700;" id="env-score-pct">0%</div>
+          <div style="font-size:12px;color:var(--text-light);">เปอร์เซ็นต์</div>
+        </div>
+      </div>
+      <div id="env-risk-badge" style="text-align:center;padding:12px;border-radius:10px;background:var(--gray-light);font-size:14px;font-weight:700;color:var(--text-light);">
+        กรุณากรอกแบบประเมินก่อน
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--text-light);text-align:center;">≥ 80% = ความเสี่ยงต่ำ &nbsp;|&nbsp; 60–79% = ปานกลาง &nbsp;|&nbsp; &lt; 60% = ความเสี่ยงสูง</div>
+    </div>
+
+    <!-- Remarks -->
+    <div class="form-section">
+      <div class="form-section-title">แผนแก้ไข / ปัญหาที่พบ</div>
+      <div class="form-row">
+        <textarea placeholder="ระบุปัญหาที่พบและแผนการแก้ไข..." style="min-height:100px;"></textarea>
+      </div>
+      <div class="two-col">
+        <div class="form-row">
+          <label>ลงชื่อผู้ประเมิน</label>
+          <input type="text" placeholder="ชื่อ-สกุล">
+        </div>
+        <div class="form-row">
+          <label>ลงชื่อหัวหน้าแผนก</label>
+          <input type="text" placeholder="ชื่อ-สกุล">
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-submit" id="btn-submit-environ" onclick="submitEnviron()">📤 ส่งแบบประเมิน → Google Sheets</button>
+    <div class="form-hint" style="text-align:center;margin-top:8px;margin-bottom:32px;">
+      * บันทึกลง Google Sheet: "Environment Assess"
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCREEN 3: AUDIT ========== -->
+<div class="screen" id="screen-audit">
+  <div class="topbar">
+    <button class="topbar-back" onclick="goHome()">←</button>
+    <div>
+      <div class="topbar-title">แบบประเมินความปลอดภัย</div>
+      <div class="topbar-sub">ระหว่างการปฏิบัติงาน · งานอาชีวอนามัย รพ.ชลบุรี</div>
+    </div>
+  </div>
+
+  <div class="step-content" style="padding-top:20px">
+
+    <!-- Header info -->
+    <div class="form-section">
+      <div class="form-section-title">ข้อมูลการประเมิน</div>
+      <div class="form-row">
+        <label>ผู้รับการประเมิน <span class="req">*</span></label>
+        <input type="text" placeholder="รหัสพนักงาน (ไม่ระบุชื่อ)">
+      </div>
+      <div class="two-col">
+        <div class="form-row">
+          <label>ตำแหน่ง <span class="req">*</span></label>
+          <select>
+            <option value="">เลือก...</option>
+            <option>พยาบาลวิชาชีพ</option>
+            <option>แพทย์</option>
+            <option>ผู้ช่วยพยาบาล</option>
+            <option>นักศึกษาพยาบาล</option>
+            <option>แพทย์ฝึกหัด / Intern</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>แผนก / หน่วยงาน <span class="req">*</span></label>
+          <select>
+            <option value="">เลือก...</option>
+            <option>ICU</option><option>ER</option><option>OPD</option>
+            <option>ตึกศัลยกรรม</option><option>ตึกอายุรกรรม</option>
+            <option>ห้องผ่าตัด</option><option>ห้องคลอด</option>
+          </select>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="form-row">
+          <label>วันที่ / เวลา <span class="req">*</span></label>
+          <input type="datetime-local">
+        </div>
+        <div class="form-row">
+          <label>Supervisor ผู้ประเมิน</label>
+          <input type="text" placeholder="ชื่อ-สกุล">
+        </div>
+      </div>
+      <div class="form-row">
+        <label>หัตถการที่สังเกต <span class="req">*</span></label>
+        <select>
+          <option value="">เลือก...</option>
+          <option>เจาะเลือด / เจาะหลอดเลือดดำ</option>
+          <option>ให้ IV / ต่อ IV set / ดูแล IV line</option>
+          <option>ฉีดยา (IV push / IM / SC)</option>
+          <option>เย็บแผล / ตัดไหม</option>
+          <option>ผ่าตัด / ทำแผลผ่าตัด</option>
+          <option>ทำแผลทั่วไป</option>
+          <option>อื่นๆ</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Checklist section 1 -->
+    <div class="form-section">
+      <div class="form-section-title">1. การเตรียมตัวก่อนทำหัตถการ</div>
+      <div id="obs-group-1"></div>
+    </div>
+
+    <!-- Checklist section 2 -->
+    <div class="form-section">
+      <div class="form-section-title">2. ระหว่างทำหัตถการ</div>
+      <div id="obs-group-2"></div>
+    </div>
+
+    <!-- Checklist section 3 -->
+    <div class="form-section">
+      <div class="form-section-title">3. การจัดการหลังทำหัตถการ</div>
+      <div id="obs-group-3"></div>
+    </div>
+
+    <!-- Score summary -->
+    <div style="background:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:14px;">ผลการสังเกต</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;text-align:center;">
+        <div style="background:var(--green-light);border-radius:10px;padding:12px;">
+          <div style="font-size:28px;font-weight:700;color:var(--green);" id="obs-pass">0</div>
+          <div style="font-size:12px;color:#1E8449;">ผ่าน</div>
+        </div>
+        <div style="background:var(--red-light);border-radius:10px;padding:12px;">
+          <div style="font-size:28px;font-weight:700;color:var(--red);" id="obs-fail">0</div>
+          <div style="font-size:12px;color:#922B21;">ไม่ผ่าน</div>
+        </div>
+        <div style="background:var(--gray-light);border-radius:10px;padding:12px;">
+          <div style="font-size:28px;font-weight:700;color:var(--gray);" id="obs-na">0</div>
+          <div style="font-size:12px;color:var(--text-light);">ไม่เกี่ยวข้อง</div>
+        </div>
+      </div>
+      <div id="obs-result-badge" style="text-align:center;padding:12px;border-radius:10px;background:var(--gray-light);font-size:14px;font-weight:700;color:var(--text-light);">
+        กรุณากรอกแบบประเมินก่อน
+      </div>
+      <div style="margin-top:8px;font-size:11px;color:var(--text-light);text-align:center;">ผ่าน = ≥ 80% ของข้อที่เกี่ยวข้อง (ไม่นับข้อ N/A)</div>
+    </div>
+
+    <!-- Remarks -->
+    <div class="form-section">
+      <div class="form-section-title">ข้อเสนอแนะสำหรับผู้ปฏิบัติ</div>
+      <div class="form-row">
+        <textarea placeholder="ระบุข้อที่ไม่ผ่าน สาเหตุ และคำแนะนำ..." style="min-height:100px;"></textarea>
+      </div>
+      <div class="two-col">
+        <div class="form-row">
+          <label>ลงชื่อผู้รับการประเมิน</label>
+          <input type="text" placeholder="ชื่อ-สกุล">
+        </div>
+        <div class="form-row">
+          <label>ลงชื่อ Supervisor</label>
+          <input type="text" placeholder="ชื่อ-สกุล">
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-submit" id="btn-submit-audit" onclick="submitAudit()">📤 บันทึกผล → Google Sheets</button>
+    <div class="form-hint" style="text-align:center;margin-top:8px;margin-bottom:32px;">
+      * บันทึกลง Google Sheet: "Safety Observation"
+    </div>
+  </div>
+</div>
+
+<!-- ========== SUCCESS SCREEN ========== -->
+<div class="screen" id="screen-success">
+  <div class="step-content" style="padding-top:0">
+    <div class="success-screen">
+      <div class="success-icon">✅</div>
+      <div class="success-title">ส่งข้อมูลสำเร็จ!</div>
+      <div class="success-sub" id="success-msg">
+        ข้อมูลถูกบันทึกเรียบร้อยแล้ว<br>
+        ขอบคุณที่ใช้ระบบรายงานของโรงพยาบาลชลบุรี
+      </div>
+      <button class="btn-home" onclick="goHome()">← กลับหน้าแรก</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// === NAV ===
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function goHome() { goTo('screen-home'); }
+function showSuccess(from) {
+  const msgs = {
+    'screen-incident': 'บันทึกลง Google Sheet 1: "Incident Log" เรียบร้อยแล้ว\nเจ้าหน้าที่จะได้รับการแจ้งเตือนทาง Email',
+    'screen-env': 'บันทึกลง Google Sheet 2: "Environment Survey" เรียบร้อยแล้ว',
+    'screen-audit': 'บันทึกลง Google Sheet 3: "Safety Audit" เรียบร้อยแล้ว'
+  };
+  document.getElementById('success-msg').textContent = msgs[from] || 'บันทึกเรียบร้อยแล้ว';
+  goTo('screen-success');
+}
+
+// === INCIDENT STEPS ===
+let incCurrent = 1;
+const INC_TOTAL = 6;
+const incLabels = [
+  'ดูแลบาดแผล',
+  'แจ้งหัวหน้า & เจาะเลือด',
+  'พบแพทย์ & PEP Timer',
+  'เจาะเลือด & รายงาน',
+  'แบบสอบถาม',
+  'แผนติดตาม & ส่งข้อมูล'
+];
+
+function renderIncDots() {
+  const el = document.getElementById('inc-dots');
+  el.innerHTML = '';
+  for (let i = 1; i <= INC_TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (i < incCurrent ? ' done' : i === incCurrent ? ' active' : '');
+    el.appendChild(d);
+  }
+  document.getElementById('inc-step-label').innerHTML =
+    `ขั้นตอนที่ <strong>${incCurrent}</strong> จาก ${INC_TOTAL} — ${incLabels[incCurrent-1]}`;
+  document.querySelectorAll('#screen-incident .step-view').forEach(v => v.classList.remove('active'));
+  document.getElementById('inc-step-' + incCurrent).classList.add('active');
+  document.getElementById('inc-prev').style.display = incCurrent === 1 ? 'none' : '';
+  const nxt = document.getElementById('inc-next');
+  if (incCurrent === INC_TOTAL) {
+    nxt.style.display = 'none';
+  } else {
+    nxt.style.display = '';
+    nxt.textContent = incCurrent === INC_TOTAL - 1 ? 'ตรวจสอบ →' : 'ถัดไป →';
+  }
+}
+function incStep(dir) {
+  incCurrent = Math.max(1, Math.min(INC_TOTAL, incCurrent + dir));
+  renderIncDots();
+  window.scrollTo(0,0);
+}
+
+// === HIV SOURCE SELECTOR (Step 3 PEP decision) ===
+function selectHIV(type) {
+  // Reset all buttons
+  ['pos','neg1','neg2'].forEach(t => {
+    const btn = document.getElementById('hbtn-' + t);
+    btn.style.borderColor = 'var(--border)';
+    btn.style.background = 'white';
+    btn.style.color = 'inherit';
+  });
+  // Highlight selected
+  const colors = { pos: ['var(--red)','#FDECEA'], neg1: ['var(--orange)','#FEF5E7'], neg2: ['var(--green)','#EAFAF1'] };
+  const btn = document.getElementById('hbtn-' + type);
+  btn.style.borderColor = colors[type][0];
+  btn.style.background = colors[type][1];
+
+  // Hide all recs, show selected
+  ['pos','neg1','neg2'].forEach(t => {
+    document.getElementById('pep-rec-' + t).style.display = 'none';
+  });
+  document.getElementById('pep-recommendation').style.display = 'block';
+  document.getElementById('pep-rec-' + type).style.display = 'block';
+}
+
+// === EXPOSURE TYPE SELECTOR ===
+function selectExp(type) {
+  ['needle','skin','mucous'].forEach(t => {
+    const card = document.getElementById('exp-' + t);
+    const guide = document.getElementById('guide-' + t);
+    if (t === type) {
+      card.style.borderColor = 'var(--red)';
+      card.querySelector('div:last-child').style.color = 'var(--red)';
+      guide.style.display = 'block';
+    } else {
+      card.style.borderColor = 'var(--border)';
+      card.querySelector('div:last-child').style.color = 'var(--text-light)';
+      guide.style.display = 'none';
+    }
+  });
+}
+
+renderIncDots();
+
+// === PEP TIMER ===
+let timerInterval = null;
+function updateTimer() {
+  const timeVal = document.getElementById('injury-time').value;
+  if (!timeVal) return;
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => calcTimer(timeVal), 1000);
+  calcTimer(timeVal);
+}
+function calcTimer(timeVal) {
+  const now = new Date();
+  const [h, m] = timeVal.split(':').map(Number);
+  const injury = new Date(now);
+  injury.setHours(h, m, 0, 0);
+  if (injury > now) injury.setDate(injury.getDate() - 1);
+  const elapsed = Math.floor((now - injury) / 1000);
+  const pepWindow = 72 * 3600; // 72 hours in seconds
+  const remaining = pepWindow - elapsed;
+  const disp = document.getElementById('timer-display');
+  const digits = document.getElementById('timer-digits');
+  const status = document.getElementById('timer-status');
+  if (remaining <= 0) {
+    digits.textContent = 'เกิน 72 ชม.';
+    disp.className = 'timer-display danger';
+    status.textContent = '❌ PEP window ปิดแล้ว — ปรึกษาแพทย์';
+    return;
+  }
+  const hh = Math.floor(remaining / 3600);
+  const mm = Math.floor((remaining % 3600) / 60);
+  const ss = remaining % 60;
+  digits.textContent = `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+  if (elapsed < 2 * 3600) {
+    disp.className = 'timer-display';
+    status.textContent = '🟢 อยู่ในช่วง Golden Window — รับ PEP โดยเร็วที่สุด!';
+  } else if (elapsed < 24 * 3600) {
+    disp.className = 'timer-display warning';
+    status.textContent = '🟡 เกิน 2 ชม. แล้ว — ยังรับ PEP ได้ รีบดำเนินการ';
+  } else {
+    disp.className = 'timer-display danger';
+    status.textContent = '🔴 เกิน 24 ชม. — ปรึกษาแพทย์ทันที';
+  }
+}
+// Init timer with now-1hr for demo
+(function() {
+  const d = new Date(Date.now() - 45*60*1000);
+  const hh = String(d.getHours()).padStart(2,'0');
+  const mm = String(d.getMinutes()).padStart(2,'0');
+  document.getElementById('injury-time').value = `${hh}:${mm}`;
+  updateTimer();
+})();
+
+// === ENV ASSESSMENT (0-3 score, 13 items, max 39) ===
+const envGroups = {
+  1: [
+    { id:'1.1', text:'มีถังทิ้งของมีคมครบทุกจุดทำหัตถการ' },
+    { id:'1.2', text:'ถังทิ้งอยู่ในระยะ ≤ 1 เมตรจากจุดทำหัตถการ ไม่ต้องเดินไปทิ้ง' },
+    { id:'1.3', text:'ถังทิ้งยึดติดผนัง/ขาตั้ง ไม่วางบนพื้นหรือเตียงผู้ป่วย' },
+    { id:'1.4', text:'ระดับเต็มของถังไม่เกิน 3/4 มีเส้นแสดงระดับชัดเจน' },
+    { id:'1.5', text:'ถังมีฝาปิดสนิท ไม่มีของมีคมโผล่พ้นปาก' },
+  ],
+  2: [
+    { id:'2.1', text:'ไม่มีการสวมปลอกเข็มกลับด้วยสองมือ (No two-hand recapping)' },
+    { id:'2.2', text:'เข็มที่ใช้แล้วไม่วางบนถาด/เตียงโดยไม่มีภาชนะป้องกัน' },
+    { id:'2.3', text:'มี Recapping device สำหรับกรณีจำเป็น (หลัง draw ยา)' },
+  ],
+  3: [
+    { id:'3.1', text:'มีถุงมือ S, M, L พร้อมใช้งาน' },
+    { id:'3.2', text:'มี Mask และ Face shield พร้อมใช้งานในหน่วยงาน (สำหรับหัตถการที่มีความเสี่ยงสารคัดหลั่งกระเด็น)' },
+  ],
+  4: [
+    { id:'4.1', text:'แสงสว่างในพื้นที่ทำหัตถการเพียงพอ ไม่มีเงาบดบัง' },
+    { id:'4.2', text:'ของมีคมไม่วางเกะกะหรือปะปนกับอุปกรณ์อื่น' },
+    { id:'4.3', text:'มีป้ายเตือนในจุดเสี่ยง (Caution, Biohazard)' },
+  ],
+  5: [
+    { id:'5.1', text:'มีโปสเตอร์ขั้นตอน 4 ขั้นเมื่อถูกเข็มตำ ติดชัดเจน' },
+  ],
+};
+const envState = {}; // id -> 0|1|2|3|null
+
+function buildEnvGroup(groupNum) {
+  const el = document.getElementById('env-group-' + groupNum);
+  if (!el) return;
+  el.innerHTML = '';
+  envGroups[groupNum].forEach(item => {
+    const div = document.createElement('div');
+    div.style.cssText = 'margin-bottom:14px;';
+    const cur = envState[item.id];
+    div.innerHTML = `
+      <div style="font-size:13px;color:var(--text);margin-bottom:8px;line-height:1.4;">
+        <span style="font-weight:700;color:var(--text-light);margin-right:6px;">${item.id}</span>${item.text}
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">
+        ${[0,1,2,3].map(v => `
+          <button onclick="setEnv('${item.id}',${v})" style="
+            padding:10px 4px;border-radius:8px;border:2px solid ${cur===v?scoreColor(v):'var(--border)'};
+            background:${cur===v?scoreBg(v):'white'};
+            color:${cur===v?scoreColor(v):'var(--text-light)'};
+            font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;
+            transition:all 0.15s;">
+            ${v}
+          </button>`).join('')}
+      </div>`;
+    el.appendChild(div);
+  });
+  updateEnvScore();
+}
+function scoreColor(v) {
+  return ['#C0392B','#E67E22','#2980B9','#27AE60'][v];
+}
+function scoreBg(v) {
+  return ['#FDECEA','#FEF5E7','#EBF5FB','#EAFAF1'][v];
+}
+function setEnv(id, val) {
+  envState[id] = val;
+  // find which group to rebuild
+  for (const g of Object.keys(envGroups)) {
+    if (envGroups[g].some(i => i.id === id)) { buildEnvGroup(Number(g)); break; }
+  }
+}
+function updateEnvScore() {
+  const total = Object.values(envGroups).flat().length; // 13
+  const maxScore = total * 3; // 39
+  const scored = Object.values(envState).reduce((a,v) => a + (v !== null && v !== undefined ? v : 0), 0);
+  const answered = Object.keys(envState).length;
+  document.getElementById('env-score-num').textContent = scored;
+  const pct = answered > 0 ? Math.round(scored / (answered * 3) * 100) : 0;
+  const pctFull = Math.round(scored / maxScore * 100);
+  document.getElementById('env-score-pct').textContent = pctFull + '%';
+  const badge = document.getElementById('env-risk-badge');
+  if (answered === 0) {
+    badge.style.background = 'var(--gray-light)'; badge.style.color = 'var(--text-light)';
+    badge.textContent = 'กรุณากรอกแบบประเมินก่อน'; return;
+  }
+  if (pctFull >= 80) {
+    badge.style.background = '#EAFAF1'; badge.style.color = '#1E8449';
+    badge.textContent = '🟢 ระดับความเสี่ยง: ต่ำ (≥ 80%)';
+  } else if (pctFull >= 60) {
+    badge.style.background = '#FEF5E7'; badge.style.color = '#784212';
+    badge.textContent = '🟡 ระดับความเสี่ยง: ปานกลาง (60–79%)';
+  } else {
+    badge.style.background = '#FDECEA'; badge.style.color = '#922B21';
+    badge.textContent = '🔴 ระดับความเสี่ยง: สูง (< 60%)';
+  }
+}
+// Build all env groups on load
+[1,2,3,4,5].forEach(buildEnvGroup);
+
+// === OBS SAFETY CHECKLIST (pass/fail/NA, 13 items) ===
+const obsGroups = {
+  1: [
+    { num:1,  text:'ล้างมือหรือใช้ alcohol gel ก่อนสวมถุงมือ' },
+    { num:2,  text:'เลือกขนาดถุงมือที่เหมาะสม (S/M/L) และสวมครบทั้งสองข้าง' },
+    { num:3,  text:'สวม Mask และ Face shield / Goggles สำหรับหัตถการที่มีความเสี่ยงกระเด็น' },
+    { num:4,  text:'เตรียมอุปกรณ์ให้พร้อมบนถาดหรือรถทำแผลที่เป็นระเบียบ' },
+  ],
+  2: [
+    { num:5,  text:'ไม่วางเข็มหรือของมีคมบนเตียง ผ้า หรือถาดโดยไม่มีภาชนะป้องกัน' },
+    { num:6,  text:'ไม่สวมปลอกเข็มกลับด้วยสองมือ (No two-hand recapping)' },
+    { num:7,  text:'หากจำเป็นต้อง recap ใช้ One-hand technique หรือ Recapping device เท่านั้น' },
+    { num:8,  text:'แจ้งผู้ป่วยหรือผู้ช่วยทุกครั้งก่อนส่งหรือรับของมีคม (Verbal warning)' },
+    { num:9,  text:'ทิ้งเข็มลงถังของมีคมทันทีหลังใช้ ไม่วางพักค้าง' },
+    { num:10, text:'ไม่ถอดเข็มออกจากกระบอกฉีดยาด้วยมือเปล่า' },
+  ],
+  3: [
+    { num:11, text:'ทิ้งอุปกรณ์ใช้แล้วในภาชนะที่ถูกต้อง (ของมีคม / ขยะติดเชื้อ)' },
+    { num:12, text:'ถอดถุงมือโดยไม่ให้มือสัมผัสด้านนอก และทิ้งทันที' },
+    { num:13, text:'ล้างมือหลังถอดถุงมือทุกครั้ง' },
+  ],
+};
+const obsState = {}; // num -> 'pass'|'fail'|'na'|null
+
+function buildObsGroup(groupNum) {
+  const el = document.getElementById('obs-group-' + groupNum);
+  if (!el) return;
+  el.innerHTML = '';
+  obsGroups[groupNum].forEach(item => {
+    const cur = obsState[item.num];
+    const div = document.createElement('div');
+    div.className = 'audit-item';
+    div.innerHTML = `
+      <div class="audit-num">${item.num}</div>
+      <div class="audit-text" style="font-size:13px;">${item.text}</div>
+      <div class="audit-toggles">
+        <button class="audit-btn yes${cur==='pass'?' active':''}" onclick="setObs(${item.num},'pass')">✓</button>
+        <button class="audit-btn no${cur==='fail'?' active':''}" onclick="setObs(${item.num},'fail')">✗</button>
+        <button class="audit-btn na${cur==='na'?' active':''}" onclick="setObs(${item.num},'na')">N/A</button>
+      </div>`;
+    el.appendChild(div);
+  });
+  updateObsScore();
+}
+function setObs(num, val) {
+  obsState[num] = val;
+  for (const g of Object.keys(obsGroups)) {
+    if (obsGroups[g].some(i => i.num === num)) { buildObsGroup(Number(g)); break; }
+  }
+}
+function updateObsScore() {
+  const pass = Object.values(obsState).filter(v => v === 'pass').length;
+  const fail = Object.values(obsState).filter(v => v === 'fail').length;
+  const na   = Object.values(obsState).filter(v => v === 'na').length;
+  document.getElementById('obs-pass').textContent = pass;
+  document.getElementById('obs-fail').textContent = fail;
+  document.getElementById('obs-na').textContent = na;
+  const relevant = pass + fail;
+  const badge = document.getElementById('obs-result-badge');
+  if (relevant === 0) {
+    badge.style.background='var(--gray-light)'; badge.style.color='var(--text-light)';
+    badge.textContent='กรุณากรอกแบบประเมินก่อน'; return;
+  }
+  const pct = Math.round(pass / relevant * 100);
+  if (pct >= 80) {
+    badge.style.background='#EAFAF1'; badge.style.color='#1E8449';
+    badge.textContent=`✅ ผ่าน (${pct}% ของข้อที่เกี่ยวข้อง)`;
+  } else {
+    badge.style.background='#FDECEA'; badge.style.color='#922B21';
+    badge.textContent=`⚠️ ต้องปรับปรุง (${pct}% ของข้อที่เกี่ยวข้อง)`;
+  }
+}
+// Build all obs groups on load
+[1,2,3].forEach(buildObsGroup);
+
+// ═══════════════════════════════════════════════════════════
+//  GOOGLE SHEETS INTEGRATION
+// ═══════════════════════════════════════════════════════════
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTj6xRvYXcRYXk58IpvQttmWNlMaZT8hl4LU4SrHypiF02BJzYUA3RY9UMqGfBLBI/exec";
+
+// ── helper: ดึงค่าจาก element ──────────────────────────────
+function qVal(selector, scope) {
+  try {
+    const root = scope ? document.querySelector(scope) : document;
+    const el = root ? root.querySelector(selector) : null;
+    return el ? el.value.trim() : "";
+  } catch { return ""; }
+}
+function qSelectVal(scope, index) {
+  try {
+    const els = document.querySelectorAll(scope + ' select');
+    return els[index] ? els[index].value : "";
+  } catch { return ""; }
+}
+function qRadio(name) {
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : "";
+}
+function qChecked(scope, name) {
+  return [...document.querySelectorAll(`${scope} input[name="${name}"]:checked`)]
+    .map(el => el.parentElement.textContent.trim());
+}
+function qAllCheckedText(containerSelector) {
+  return [...document.querySelectorAll(`${containerSelector} input[type="checkbox"]:checked`)]
+    .map(el => el.parentElement.textContent.trim());
+}
+
+// ── POST to Apps Script ─────────────────────────────────────
+// ใช้ text/plain เพื่อหลีกเลี่ยง CORS preflight
+// Apps Script จะรับผ่าน e.postData.contents แล้ว JSON.parse เอง
+function postToSheet(payload, screenId, btnId) {
+  const btn = document.getElementById(btnId);
+  const orig = btn ? btn.textContent : '';
+  if (btn) { btn.textContent = '⏳ กำลังบันทึก...'; btn.disabled = true; }
+
+  const formData = new FormData();
+  formData.append('data', JSON.stringify(payload));
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: formData          // FormData ไม่ trigger preflight, Apps Script รับได้
+  })
+  .then(res => res.text().catch(() => 'ok'))
+  .then(text => {
+    const msgs = {
+      'screen-incident': 'บันทึกลง "Incident Log" เรียบร้อยแล้ว ✅',
+      'screen-env':      'บันทึกลง "Environment Assess" เรียบร้อยแล้ว ✅',
+      'screen-audit':    'บันทึกลง "Safety Observation" เรียบร้อยแล้ว ✅'
+    };
+    document.getElementById('success-msg').textContent =
+      (msgs[screenId] || 'บันทึกเรียบร้อยแล้ว ✅') + '\n\nข้อมูลเข้า Google Sheets แล้ว';
+    goTo('screen-success');
+  })
+  .catch(err => {
+    alert('❌ เกิดข้อผิดพลาด: ' + err.message + '\nลองใหม่อีกครั้ง');
+    if (btn) { btn.textContent = orig; btn.disabled = false; }
+  });
+}
+
+// ── เมนู 1: Incident ───────────────────────────────────────
+function submitIncident() {
+  // ดึงสาเหตุ (checkbox ใน step 5 หมวด จ.)
+  const allCauseCheckboxes = [...document.querySelectorAll('#inc-step-5 .form-section:last-child .checkbox-group input[type="checkbox"]:checked')]
+    .map(el => el.parentElement.textContent.trim());
+
+  // PPE + body parts แยกจาก name attribute
+  const bodyParts = qChecked('#inc-step-5', 'body');
+  const ppe       = qChecked('#inc-step-5', 'ppe');
+
+  // HIV source step 3 — ดูปุ่มที่ถูก highlight
+  let hivStep3 = "";
+  ['pos','neg1','neg2'].forEach(k => {
+    const el = document.getElementById('hbtn-' + k);
+    if (el && el.style.background && el.style.background !== 'white' && el.style.background !== '') {
+      hivStep3 = k;
+    }
+  });
+
+  // คำแนะนำ PEP ที่ pop up
+  let pepAdvice = "";
+  ['pos','neg1','neg2'].forEach(k => {
+    const rec = document.getElementById('pep-rec-' + k);
+    if (rec && rec.style.display !== 'none') {
+      const title = rec.querySelector('[style*="font-weight:700"]');
+      pepAdvice = title ? title.textContent.trim() : k;
+    }
+  });
+
+  const payload = {
+    menu: "incident",
+    fullname:        qVal('#inc-step-5 input[placeholder="ชื่อ-สกุล"]'),
+    hn:              qVal('#inc-step-5 input[placeholder="เช่น 62021642"]'),
+    age:             qVal('#inc-step-5 input[type="number"]'),
+    gender:          qSelectVal('#inc-step-5', 0),
+    phone:           qVal('#inc-step-5 input[type="tel"]'),
+    position:        qSelectVal('#inc-step-5', 1),
+    workExp:         qSelectVal('#inc-step-5', 2),
+    ward:            qVal('input[placeholder*="ICU Trauma"]'),
+    pct:             qVal('input[placeholder*="PCT"]'),
+    incidentDate:    qVal('#inc-step-5 input[type="date"]'),
+    incidentTime:    qVal('#inc-step-5 input[type="time"]'),
+    shift:           qRadio('shift'),
+    injuryType:      qRadio('injury-type'),
+    activity:        qSelectVal('#inc-step-5', 3),
+    activityDetail:  qVal('input[placeholder*="แทง DLC"]'),
+    bodyParts:       bodyParts,
+    ppe:             ppe,
+    hivSource:       qRadio('src-hiv'),
+    hcvSource:       qRadio('src-hcv'),
+    hbvSource:       qRadio('src-hbv'),
+    hbvImmunity:     qRadio('hbv-imm'),
+    pepTime:         qSelectVal('#inc-step-5', 4),
+    causes:          allCauseCheckboxes,
+    causeDetail:     qVal('#inc-step-5 textarea'),
+    hivSourceStep3:  hivStep3,
+    pepAdvice:       pepAdvice,
+    timerInjuryTime: document.getElementById('injury-time')?.value || ""
+  };
+
+  postToSheet(payload, 'screen-incident', 'btn-submit-incident');
+}
+
+// ── เมนู 2: Environment Assessment ─────────────────────────
+function submitEnviron() {
+  // scores มาจาก envState ที่ build อยู่แล้ว
+  const scoreKeys = ['1.1','1.2','1.3','1.4','1.5','2.1','2.2','2.3','3.1','3.2','4.1','4.2','4.3','5.1'];
+  const scores = {};
+  scoreKeys.forEach(k => { scores[k] = (typeof envState[k] !== 'undefined') ? envState[k] : null; });
+
+  // Sign fields — last 2 inputs ใน screen-env
+  const signInputs = [...document.querySelectorAll('#screen-env input[type="text"]')];
+  const signAssessor = signInputs[signInputs.length - 2]?.value.trim() || "";
+  const signHead     = signInputs[signInputs.length - 1]?.value.trim() || "";
+
+  const payload = {
+    menu: "environ",
+    department:   qSelectVal('#screen-env', 0),
+    assessDate:   qVal('#screen-env input[type="date"]'),
+    assessor:     qVal('#screen-env input[placeholder*="ชื่อ-นามสกุล"]'),
+    scores:       scores,
+    remedialPlan: qVal('#screen-env textarea'),
+    signAssessor: signAssessor,
+    signHead:     signHead
+  };
+
+  postToSheet(payload, 'screen-env', 'btn-submit-environ');
+}
+
+// ── เมนู 3: Safety Observation ──────────────────────────────
+function submitAudit() {
+  // observations มาจาก obsState ที่ build อยู่แล้ว
+  const observations = {};
+  Object.keys(obsState).forEach(k => { observations[Number(k)] = obsState[k]; });
+
+  // Sign fields
+  const signInputs = [...document.querySelectorAll('#screen-audit .two-col input[type="text"]')];
+  const signAuditee    = signInputs[signInputs.length - 2]?.value.trim() || "";
+  const signSupervisor = signInputs[signInputs.length - 1]?.value.trim() || "";
+
+  const payload = {
+    menu: "audit",
+    auditeeId:     qVal('#screen-audit input[placeholder*="รหัสพนักงาน"]'),
+    auditeePos:    qSelectVal('#screen-audit', 0),
+    department:    qSelectVal('#screen-audit', 1),
+    auditDateTime: qVal('#screen-audit input[type="datetime-local"]'),
+    supervisor:    qVal('#screen-audit input[placeholder*="ชื่อ-สกุล"]'),
+    procedure:     qSelectVal('#screen-audit', 2),
+    observations:  observations,
+    feedback:      qVal('#screen-audit textarea'),
+    signAuditee:   signAuditee,
+    signSupervisor:signSupervisor
+  };
+
+  postToSheet(payload, 'screen-audit', 'btn-submit-audit');
+}
+</script>
+</body>
+</html>
