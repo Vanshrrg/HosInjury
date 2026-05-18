@@ -988,10 +988,10 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
           </div>
           <div class="form-row">
             <label>กิจกรรมขณะเกิดเหตุ <span class="req">*</span></label>
-            <select id="f-activity" onchange="clearErr(this)"><option value="">เลือก...</option><option>เจาะเลือด / เจาะ DTX / เจาะ Hct</option><option>ฉีดยา / ให้สารน้ำ</option><option>ทำผ่าตัด / ช่วยผ่าตัด</option><option>เย็บแผล</option><option>ตัดไหม</option><option>ทำคลอด / ช่วยทำคลอด</option><option>แทง C-line / เจาะหลัง / เจาะปอด</option><option>ทำหัตถการ / ช่วยทำหัตถการ</option><option>สวมปลอกเข็มกลับ</option><option>เก็บอุปกรณ์ / เก็บขยะ</option><option>ผู้ป่วยไม่ให้ความร่วมมือ / สับสน</option><option>สารคัดหลั่งกระเด็น</option><option>ชันสูตรศพ</option><option>อื่นๆ</option></select>
+            <select id="f-activity" onchange="clearErr(this)"><option value="">เลือก...</option><option>เจาะเลือด / เจาะ DTX / เจาะ Hct</option><option>ฉีดยา / ให้สารน้ำ</option><option>ผ่าตัด / ช่วยผ่าตัด</option><option>เย็บแผล</option><option>ตัดไหม</option><option>ทำคลอด / ช่วยทำคลอด</option><option>แทง C-line / เจาะหลัง / เจาะปอด</option><option>ทำหัตถการ / ช่วยทำหัตถการ</option><option>เก็บอุปกรณ์ / เก็บขยะ</option><option>เคลื่อนย้ายผู้ป่วย</option><option>อื่นๆ</option></select>
             <div class="field-err" id="err-activity"></div>
           </div>
-          <div class="form-row"><label>รายละเอียด (ถ้าเลือกอื่นๆ)</label><input id="f-activity-detail" type="text" placeholder="เช่น แทง DLC, ช่วยจับผู้ป่วย agitate..."></div>
+          <div class="form-row"><label>รายละเอียด</label><input id="f-activity-detail" type="text" placeholder="เช่น แทง DLC, ช่วยจับผู้ป่วย agitate..."></div>
           <div class="form-row">
             <label>ส่วนของร่างกายที่บาดเจ็บ <span class="req">*</span></label>
             <div class="checkbox-group" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
@@ -1047,21 +1047,28 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
 
         <!-- จ. สาเหตุ -->
         <div class="form-section">
-          <div class="form-section-title">จ. สาเหตุการเกิดเหตุ <span class="req">*</span></div>
+          <div class="form-section-title">จ. สาเหตุการเกิดอุบัติเหตุครั้งนี้ (เลือกได้หลายข้อ) <span class="req">*</span></div>
           <div class="checkbox-group">
-            <label class="checkbox-item"><input type="checkbox" name="f-cause" value="ทักษะ/ประสบการณ์" onchange="clearErr(document.getElementById('err-cause'))"> ด้านทักษะและประสบการณ์</label>
-            <label class="checkbox-item"><input type="checkbox" name="f-cause" value="PPE" onchange="clearErr(document.getElementById('err-cause'))"> การใช้ PPE ไม่เหมาะสม</label>
-            <label class="checkbox-item"><input type="checkbox" name="f-cause" value="ผู้ป่วยไม่ร่วมมือ" onchange="clearErr(document.getElementById('err-cause'))"> ผู้ป่วยไม่ร่วมมือ / ขยับกะทันหัน</label>
-            <label class="checkbox-item"><input type="checkbox" name="f-cause" value="สภาพแวดล้อม" onchange="clearErr(document.getElementById('err-cause'))"> สภาพแวดล้อม (คับแคบ / แสงน้อย)</label>
-            <label class="checkbox-item"><input type="checkbox" name="f-cause" value="ภาระงาน/เร่งรีบ" onchange="clearErr(document.getElementById('err-cause'))"> ภาระงานและความเร่งรีบ</label>
-            <label class="checkbox-item"><input type="checkbox" name="f-cause" value="สภาพร่างกาย" onchange="clearErr(document.getElementById('err-cause'))"> สภาพร่างกาย (อ่อนเพลีย / ง่วงนอน)</label>
-            <label class="checkbox-item"><input type="checkbox" name="f-cause" value="สภาพจิตใจ" onchange="clearErr(document.getElementById('err-cause'))"> สภาพจิตใจ (เครียด / สับสน)</label>
-            <label class="checkbox-item"><input type="checkbox" name="f-cause" value="อุปกรณ์ไม่เป็นระเบียบ" onchange="clearErr(document.getElementById('err-cause'))"> อุปกรณ์วางไม่เป็นระเบียบ</label>
-            <label class="checkbox-item"><input type="checkbox" name="f-cause" value="ประมาท" onchange="clearErr(document.getElementById('err-cause'))"> ประมาทขาดความระมัดระวัง</label>
-            <label class="checkbox-item"><input type="checkbox" name="f-cause" value="ฉุกเฉิน" onchange="clearErr(document.getElementById('err-cause'))"> สถานการณ์เร่งรีบฉุกเฉิน</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c1" onchange="clearErr(document.getElementById('err-cause'))"> สภาพร่างกายของผู้ปฏิบัติงาน เช่น อ่อนเพลีย พักผ่อนไม่เพียงพอ ง่วงนอน เจ็บป่วยเล็กน้อย (ท้องเสีย ไข้หวัด เวียนศีรษะ) หรือมีอาการข้างเคียงจากยาที่ใช้</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c2" onchange="clearErr(document.getElementById('err-cause'))"> สภาพจิตใจและอารมณ์ เช่น ความเครียด เหนื่อยใจ เบื่อ โมโห ผิดหวัง สับสนกับคำสั่ง รู้สึกกังวล หวาดกลัว ทำงานซ้ำ ๆ หรือมีความขัดแย้งกับเพื่อนร่วมงาน</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c3" onchange="clearErr(document.getElementById('err-cause'))"> ด้านความรู้ เช่น ได้รับการฝึกอบรมไม่เพียงพอ ยังไม่ได้รับการปฐมนิเทศ หรือได้รับคำแนะนำที่คลาดเคลื่อน</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c4" onchange="clearErr(document.getElementById('err-cause'))"> ด้านทักษะและประสบการณ์ เช่น เพิ่งเริ่มเข้าทำงาน ไม่ค่อยได้ฝึกหรือปฏิบัติงานลักษณะนี้ หรือไม่ค่อยได้พบการปฏิบัติงานลักษณะนี้</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c5" onchange="clearErr(document.getElementById('err-cause'))"> สภาพแวดล้อมในการทำงาน เช่น ความสูงของเตียง โต๊ะ หรือเก้าอี้ไม่เหมาะสม แสงสว่างไม่เพียงพอ พื้นที่คับแคบ</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c6" onchange="clearErr(document.getElementById('err-cause'))"> ลักษณะของสถานที่ทำงาน เช่น มีสิ่งของวางเกะกะ หรือไม่เป็นระเบียบ</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c7" onchange="clearErr(document.getElementById('err-cause'))"> เครื่องมือและอุปกรณ์ เช่น อุปกรณ์มีไม่เพียงพอ หรือไม่เหมาะสมกับการใช้งาน ถุงมือหลวม ถุงมือลื่น</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c8" onchange="clearErr(document.getElementById('err-cause'))"> มาตรฐานและกระบวนการทำงาน เช่น ขั้นตอนการทำงานยังไม่ชัดเจน การสื่อสารในทีมไม่ตรงกัน หรือการทำงานร่วมกันยังไม่ราบรื่น</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c9" onchange="clearErr(document.getElementById('err-cause'))"> การใช้งานอุปกรณ์ เช่น การใช้เครื่องมือหรืออุปกรณ์ไม่ตรงตามวิธีที่แนะนำ</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c10" onchange="clearErr(document.getElementById('err-cause'))"> ลักษณะงานที่ได้รับมอบหมาย เช่น ต้องปฏิบัติงานนอกเหนือจากหน้าที่หลัก หรือได้รับมอบหมายงานหลายอย่างพร้อมกัน</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c11" onchange="clearErr(document.getElementById('err-cause'))"> ภาระงานและความเร่งรีบ เช่น งานจำนวนมาก เวลาจำกัด ทำให้ต้องเร่งรีบในการทำงาน</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c12" onchange="clearErr(document.getElementById('err-cause'))"> การปฏิบัติตามมาตรการความปลอดภัย เช่น ยังไม่สามารถปฏิบัติตามขั้นตอน กฎ หรือข้อแนะนำด้านความปลอดภัยได้ครบถ้วนในบางสถานการณ์</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c13" onchange="clearErr(document.getElementById('err-cause'))"> การใช้อุปกรณ์ป้องกันส่วนบุคคล เช่น ไม่ได้สวมใส่ หรือสวมใส่อุปกรณ์ป้องกันที่ไม่เหมาะสมกับงานนั้น ๆ</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c14" onchange="clearErr(document.getElementById('err-cause'))"> สมาธิระหว่างการทำงาน เช่น มีสิ่งรบกวน การพูดคุยเรื่องอื่น หรือบรรยากาศที่ทำให้เสียสมาธิ</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c15" onchange="clearErr(document.getElementById('err-cause'))"> ปัจจัยจากผู้ป่วย เช่น ผู้ป่วยไม่ให้ความร่วมมือ ขยับตัวกะทันหัน</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c16" onchange="clearErr(document.getElementById('err-cause'))"> ปัจจัยจากเพื่อนร่วมงาน (ก่อนเกิดเหตุ) เช่น มีการวางเข็มหรือของมีคมไว้ไม่เหมาะสม หรือมีของมีคมปะปนในห่อผ้า</label>
+            <label class="checkbox-item"><input type="checkbox" name="f-cause" data-key="c17" onchange="clearErr(document.getElementById('err-cause'))"> ปัจจัยจากเพื่อนร่วมงาน (ขณะเกิดเหตุ) เช่น การเคลื่อนไหวใกล้กันในพื้นที่จำกัด ทำให้เกิดการชนหรือกระเด็นของสารคัดหลั่ง แม้ผู้ปฏิบัติงานจะทำงานอย่างถูกต้องและระมัดระวังแล้วก็ตาม</label>
           </div>
           <div class="field-err" id="err-cause"></div>
-          <div class="form-row" style="margin-top:10px;"><label>รายละเอียดเพิ่มเติม (อธิบายเหตุการณ์) <span class="req">*</span></label><textarea id="f-cause-detail" placeholder="อธิบายเหตุการณ์ที่เกิดขึ้น สาเหตุ สภาพการณ์..." style="min-height:80px;" oninput="updateFormProgress()"></textarea><div class="field-err" id="err-cause-detail"></div></div>
+          <div class="form-row" style="margin-top:10px;"><label>รายละเอียดเพิ่มเติม (อธิบายเหตุการณ์)</label><textarea id="f-cause-detail" placeholder="อธิบายเหตุการณ์ที่เกิดขึ้น สาเหตุ สภาพการณ์..." style="min-height:80px;" oninput="updateFormProgress()"></textarea><div class="field-err" id="err-cause-detail"></div></div>
         </div>
 
         <div id="form-global-err" style="display:none;background:#FDECEA;border:1.5px solid var(--red);border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#922B21;font-weight:600;">
@@ -1547,7 +1554,7 @@ function incStep(dir) {
 }
 
 // ── FORM PROGRESS TRACKER ──────────────────────────────────
-const REQUIRED_FIELDS = ['f-fullname','f-hn','f-age','f-gender','f-position','f-work-exp','f-ward','f-date','f-time','f-activity','f-pep-time','f-cause-detail'];
+const REQUIRED_FIELDS = ['f-fullname','f-hn','f-age','f-gender','f-position','f-work-exp','f-ward','f-date','f-time','f-activity','f-pep-time'];
 const REQUIRED_RADIOS = ['f-shift','f-injury-type','f-src-hiv','f-src-hcv','f-src-hbv','f-hbv-imm','f-treatment'];
 const REQUIRED_CHECKS = ['f-body','f-ppe','f-cause'];
 
@@ -1803,7 +1810,6 @@ function validateAndSubmitIncident() {
   reqRadio('f-treatment','err-treatment','กรุณาระบุสถานะการรักษา');
   // จ.
   reqCheckbox('f-cause','err-cause','กรุณาเลือกสาเหตุอย่างน้อย 1 ข้อ');
-  req('f-cause-detail','err-cause-detail','กรุณาอธิบายเหตุการณ์ที่เกิดขึ้น');
 
   const globalErr = document.getElementById('form-global-err');
   if (!valid) {
@@ -2063,7 +2069,7 @@ function updateObsScore() {
 //  GOOGLE SHEETS INTEGRATION
 // ═══════════════════════════════════════════════════════════
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTj6xRvYXcRYXk58IpvQttmWNlMaZT8hl4LU4SrHypiF02BJzYUA3RY9UMqGfBLBI/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZxA18faWwE7WSpTCDIfijkFEjcW_K9UzMtNRAz7agXMAcbbJznRB6hlGFSbKJoBdn/exec";
 
 // ── helper: ดึงค่าจาก element ──────────────────────────────
 function qVal(selector, scope) {
@@ -2128,7 +2134,14 @@ function postToSheet(payload, screenId, btnId) {
 function submitIncident() {
   const bodyParts = [...document.querySelectorAll('input[name="f-body"]:checked')].map(el => el.value);
   const ppe       = [...document.querySelectorAll('input[name="f-ppe"]:checked')].map(el => el.value);
-  const causes    = [...document.querySelectorAll('input[name="f-cause"]:checked')].map(el => el.value);
+
+  // สาเหตุ: ส่งเป็น keyed object { c1: "มี"|"", c2: "มี"|"", ... }
+  const causeKeys = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11','c12','c13','c14','c15','c16','c17'];
+  const causes = {};
+  causeKeys.forEach(key => {
+    const el = document.querySelector(`input[name="f-cause"][data-key="${key}"]`);
+    causes[key] = (el && el.checked) ? "มี" : "";
+  });
 
   let hivStep3 = "", pepAdvice = "";
   ['pos','neg1','neg2'].forEach(k => {
