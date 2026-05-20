@@ -579,7 +579,7 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
     <div class="menu-card green" onclick="goTo('screen-audit')">
       <div class="menu-icon green">🔍</div>
       <div class="menu-info">
-        <h3>Audit ความปลอดภัย</h3>
+        <h3>แบบประเมินความปลอดภัย</h3>
         <p>ตรวจสอบพฤติกรรมขณะทำหัตถการ</p>
       </div>
       <div class="menu-arrow">›</div>
@@ -747,7 +747,7 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
                 <li>เช็ดทำความสะอาดด้วยเบตาดีน</li>
               </ul>
             </div>
-            <div class="info-box orange"><h4>⏱️ ยาต้านไวรัสได้ผลดีที่สุดภายใน 2 ชม. · ต้องเริ่มก่อน 72 ชม.</h4></div>
+            <div class="info-box orange"><h4>⏱️ ยาต้านไวรัสได้ผลดีที่สุดภายใน 2 ชม. และสามารถให้ได้ในระยะเวลาไม่เกิน 72 ชม.</h4></div>
           </div>
           <div id="guide-skin" style="display:none;">
             <div class="info-box blue">
@@ -777,8 +777,7 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
         <div class="step-view" id="inc-step-2">
           <div class="step-header"><div class="step-num">2</div><div><div class="step-title">แจ้งหัวหน้า & ICN</div><div class="step-desc">ทันทีหลังล้างแผลเสร็จ</div></div></div>
           <div class="info-box red"><h4>📢 แจ้งทันที</h4><ul><li>แจ้ง <strong>หัวหน้าหน่วยงาน / หัวหน้าเวร</strong></li><li>แจ้ง <strong>ICN (Infection Control Nurse)</strong></li></ul></div>
-          <div class="info-box blue"><h4>🩸 เจาะเลือด Baseline</h4><ul><li>Anti-HIV · HBsAg · Anti-HCV ของตนเอง</li><li>หากทราบผลเลือดผู้ป่วยต้นทาง — ขอตรวจเลือดผู้ป่วยต้นทางด้วย</li><li>ไม่ทราบผลผู้ป่วยต้นทาง → ถือว่าเสี่ยงสูงไว้ก่อน</li></ul></div>
-          <div class="info-box orange"><h4>⚠️ HP-PCI-CBH-005</h4>เจาะเลือด Anti-HIV ทั้งผู้ป่วยและบุคลากรในครั้งแรก <strong>กรณีไม่ทราบผลเลือด</strong></div>
+          <div class="info-box blue"><h4>🩸 เจาะเลือด Baseline</h4><ul><li>Anti-HIV · HBsAg · Anti-HCV ของตนเองและผู้ป่วยต้นทาง</li><li>หากทราบผลเลือดผู้ป่วยต้นทางแล้ว — ไม่ต้องเจาะใหม่</li><li>ไม่ทราบผลผู้ป่วยต้นทาง → ถือว่าเสี่ยงสูงไว้ก่อน</li></ul></div>
         </div>
 
         <!-- STEP 3 -->
@@ -949,15 +948,20 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
           </div>
           <div class="two-col">
             <div class="form-row"><label>อายุ (ปี) <span class="req">*</span></label><input id="f-age" type="number" placeholder="27" min="18" max="70" oninput="clearErr(this)"><div class="field-err" id="err-age"></div></div>
-            <div class="form-row"><label>เพศ <span class="req">*</span></label><select id="f-gender" onchange="clearErr(this)"><option value="">เลือก...</option><option>ชาย</option><option>หญิง</option></select><div class="field-err" id="err-gender"></div></div>
+            <div class="form-row"><label>เพศ <span class="req">*</span></label><select id="f-gender" onchange="clearErr(this)"><option value="">เลือก...</option><option>ชาย</option><option>หญิง</option><option>ไม่ระบุ</option></select><div class="field-err" id="err-gender"></div></div>
           </div>
           <div class="two-col">
-            <div class="form-row"><label>ตำแหน่ง <span class="req">*</span></label><select id="f-position" onchange="clearErr(this)"><option value="">เลือก...</option><option>พยาบาลวิชาชีพ</option><option>แพทย์ staff</option><option>แพทย์ resident / intern</option><option>นักศึกษาแพทย์</option><option>นักศึกษาแพทย์ Extern</option><option>นักศึกษาพยาบาล</option><option>ผู้ช่วยเหลือคนไข้</option><option>Lab / นักเทคนิคการแพทย์</option><option>พนักงานทำความสะอาด</option><option>เภสัชกร</option><option>หน่วยสนับสนุนอื่นๆ</option></select><div class="field-err" id="err-position"></div></div>
+            <div class="form-row"><label>ตำแหน่ง <span class="req">*</span></label>
+              <input id="f-position" list="f-position-list" placeholder="เลือกหรือพิมพ์..." oninput="clearErr(this)">
+              <datalist id="f-position-list"><option>พยาบาลวิชาชีพ</option><option>แพทย์ staff</option><option>แพทย์ resident / intern</option><option>นักศึกษาแพทย์</option><option>นักศึกษาแพทย์ Extern</option><option>นักศึกษาพยาบาล</option><option>ผู้ช่วยเหลือคนไข้</option><option>Lab / นักเทคนิคการแพทย์</option><option>พนักงานทำความสะอาด</option><option>เภสัชกร</option><option>หน่วยสนับสนุนอื่นๆ</option></datalist>
+              <div class="field-err" id="err-position"></div>
+            </div>
             <div class="form-row"><label>อายุงาน <span class="req">*</span></label><select id="f-work-exp" onchange="clearErr(this)"><option value="">เลือก...</option><option>0–1 ปี</option><option>1–3 ปี</option><option>3–5 ปี</option><option>มากกว่า 5 ปี</option></select><div class="field-err" id="err-work-exp"></div></div>
           </div>
+          <div class="form-row"><label>หอผู้ป่วย / สถานที่เกิดเหตุ <span class="req">*</span></label><input id="f-ward" type="text" placeholder="ICU Trauma, ER, OR..." oninput="clearErr(this)"><div class="field-err" id="err-ward"></div></div>
           <div class="two-col">
-            <div class="form-row"><label>หอผู้ป่วย / สถานที่เกิดเหตุ <span class="req">*</span></label><input id="f-ward" type="text" placeholder="ICU Trauma, ER, OR..." oninput="clearErr(this)"><div class="field-err" id="err-ward"></div></div>
-            <div class="form-row"><label>PCT</label><input id="f-pct" type="text" placeholder="ชื่อ PCT (ถ้ามี)"></div>
+            <div class="form-row"><label>เบอร์โทรศัพท์ส่วนตัว</label><input id="f-phone" type="tel" placeholder="08x-xxx-xxxx"></div>
+            <div class="form-row"><label>เบอร์โทรศัพท์หน่วยงาน</label><input id="f-phone-dept" type="tel" placeholder="เบอร์โทรหน่วยงาน"></div>
           </div>
         </div>
 
@@ -1022,8 +1026,8 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
         <div class="form-section">
           <div class="form-section-title">ค. ข้อมูล ผู้ป่วยต้นทาง</div>
           <div class="form-row"><label>สถานะ HIV ของผู้ป่วยต้นทาง <span class="req">*</span></label><div class="radio-group"><label class="radio-item"><input type="radio" name="f-src-hiv" value="pos" onchange="clearErr(document.getElementById('err-src-hiv'))"> HIV Positive</label><label class="radio-item"><input type="radio" name="f-src-hiv" value="neg" onchange="clearErr(document.getElementById('err-src-hiv'))"> HIV Negative</label><label class="radio-item"><input type="radio" name="f-src-hiv" value="unknown" onchange="clearErr(document.getElementById('err-src-hiv'))"> ไม่ทราบ</label></div><div class="field-err" id="err-src-hiv"></div></div>
-          <div class="form-row"><label>สถานะ HCV ของผู้ป่วยต้นทาง <span class="req">*</span></label><div class="radio-group"><label class="radio-item"><input type="radio" name="f-src-hcv" value="pos" onchange="clearErr(document.getElementById('err-src-hcv'))"> HCV Positive</label><label class="radio-item"><input type="radio" name="f-src-hcv" value="neg" onchange="clearErr(document.getElementById('err-src-hcv'))"> HCV Negative</label><label class="radio-item"><input type="radio" name="f-src-hcv" value="unknown" onchange="clearErr(document.getElementById('err-src-hcv'))"> ไม่ทราบ</label></div><div class="field-err" id="err-src-hcv"></div></div>
           <div class="form-row"><label>สถานะ HBV ของผู้ป่วยต้นทาง <span class="req">*</span></label><div class="radio-group"><label class="radio-item"><input type="radio" name="f-src-hbv" value="pos" onchange="clearErr(document.getElementById('err-src-hbv'))"> HBV Positive</label><label class="radio-item"><input type="radio" name="f-src-hbv" value="neg" onchange="clearErr(document.getElementById('err-src-hbv'))"> HBV Negative</label><label class="radio-item"><input type="radio" name="f-src-hbv" value="unknown" onchange="clearErr(document.getElementById('err-src-hbv'))"> ไม่ทราบ</label></div><div class="field-err" id="err-src-hbv"></div></div>
+          <div class="form-row"><label>สถานะ HCV ของผู้ป่วยต้นทาง <span class="req">*</span></label><div class="radio-group"><label class="radio-item"><input type="radio" name="f-src-hcv" value="pos" onchange="clearErr(document.getElementById('err-src-hcv'))"> HCV Positive</label><label class="radio-item"><input type="radio" name="f-src-hcv" value="neg" onchange="clearErr(document.getElementById('err-src-hcv'))"> HCV Negative</label><label class="radio-item"><input type="radio" name="f-src-hcv" value="unknown" onchange="clearErr(document.getElementById('err-src-hcv'))"> ไม่ทราบ</label></div><div class="field-err" id="err-src-hcv"></div></div>
         </div>
 
         <!-- ง. การจัดการ -->
@@ -1038,9 +1042,8 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
             <div class="radio-group">
               <label class="radio-item"><input type="radio" name="f-treatment" value="received" onchange="onTreatmentChange(this.value)"> 💊 ได้รับยาแล้ว</label>
               <label class="radio-item"><input type="radio" name="f-treatment" value="low-risk" onchange="onTreatmentChange(this.value)"> ✅ ไม่จำเป็นต้องรับยา (ความเสี่ยงต่ำ)</label>
-              <label class="radio-item"><input type="radio" name="f-treatment" value="pending" onchange="onTreatmentChange(this.value)"> ⏳ ยังอยู่ระหว่างดำเนินการ</label>
             </div>
-            <div class="form-hint">เมื่อระบุว่าได้รับยาหรือไม่จำเป็น ระบบจะหยุดจับเวลานับถอยหลัง</div>
+            <div class="form-hint">เมื่อระบุสถานะ ระบบจะหยุดจับเวลานับถอยหลัง</div>
             <div class="field-err" id="err-treatment"></div>
           </div>
         </div>
@@ -1095,65 +1098,48 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
 
   <div class="step-content" style="padding-top:20px">
 
-    <!-- Instructions -->
-    <div style="background:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;margin-bottom:16px;">
-      <div style="font-size:13px;color:var(--text);line-height:1.5;">
-        📋 <strong>วิธีใช้:</strong> ตอบแต่ละข้อว่า <span style="color:var(--green);font-weight:700;">✓ มี</span> หรือ <span style="color:var(--red);font-weight:700;">✗ ไม่มี</span> ระบบจะคำนวณระดับความเสี่ยงให้อัตโนมัติ
-      </div>
-    </div>
-
     <!-- Header info -->
     <div class="form-section">
       <div class="form-section-title">ข้อมูลผู้ประเมิน</div>
       <div class="two-col">
         <div class="form-row">
           <label>แผนก / หน่วยงาน <span class="req">*</span></label>
-          <select>
-            <option value="">เลือก...</option>
-            <option>ICU</option><option>ER</option><option>OPD</option>
-            <option>ตึกศัลยกรรม</option><option>ตึกอายุรกรรม</option>
-            <option>ห้องผ่าตัด</option><option>ห้องคลอด</option>
-          </select>
+          <input type="text" id="env-department" placeholder="พิมพ์ชื่อแผนก / หน่วยงาน">
         </div>
         <div class="form-row">
-          <label>วันที่ประเมิน <span class="req">*</span></label>
-          <input type="date">
+          <label>วันที่ประเมิน</label>
+          <input type="text" id="env-assess-date" readonly
+            style="background:var(--gray-light);color:var(--text-light);cursor:default;">
         </div>
       </div>
       <div class="form-row">
         <label>ผู้ประเมิน <span class="req">*</span></label>
-        <input type="text" placeholder="ชื่อ-นามสกุล หรือรหัสพนักงาน">
+        <input type="text" id="env-assessor" placeholder="ชื่อ-นามสกุล หรือรหัสพนักงาน">
       </div>
     </div>
 
-    <!-- หมวด 1: Sharps container -->
+    <!-- หมวด 1: ถังทิ้งของมีคม -->
     <div class="form-section">
-      <div class="form-section-title">1. ถังทิ้งของมีคม (Sharps Container)</div>
+      <div class="form-section-title">1. ถังทิ้งของมีคม</div>
       <div id="env-group-1"></div>
     </div>
 
-    <!-- หมวด 2: Needle management -->
+    <!-- หมวด 2: อุปกรณ์ป้องกัน -->
     <div class="form-section">
-      <div class="form-section-title">2. การจัดการเข็ม (Needle Management)</div>
+      <div class="form-section-title">2. อุปกรณ์ป้องกันส่วนบุคคล</div>
       <div id="env-group-2"></div>
     </div>
 
-    <!-- หมวด 3: PPE -->
+    <!-- หมวด 3: สภาพแวดล้อม -->
     <div class="form-section">
-      <div class="form-section-title">3. ความพร้อมใช้งานของอุปกรณ์ป้องกัน (PPE Availability)</div>
+      <div class="form-section-title">3. สภาพแวดล้อม</div>
       <div id="env-group-3"></div>
     </div>
 
-    <!-- หมวด 4: Environment -->
+    <!-- หมวด 4: ขั้นตอนและเอกสาร -->
     <div class="form-section">
-      <div class="form-section-title">4. สภาพแวดล้อมและแสงสว่าง</div>
+      <div class="form-section-title">4. ขั้นตอนและความรู้ของเจ้าหน้าที่</div>
       <div id="env-group-4"></div>
-    </div>
-
-    <!-- หมวด 5: Documents -->
-    <div class="form-section">
-      <div class="form-section-title">5. ระบบแจ้งเตือนและเอกสาร ณ จุดปฏิบัติงาน</div>
-      <div id="env-group-5"></div>
     </div>
 
     <!-- Remarks -->
@@ -1182,7 +1168,7 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
     <button class="topbar-back" onclick="goHome()">←</button>
     <div>
       <div class="topbar-title">แบบประเมินความปลอดภัย</div>
-      <div class="topbar-sub">ระหว่างการปฏิบัติงาน · งานอาชีวอนามัย รพ.ชลบุรี</div>
+      <div class="topbar-sub">ระหว่างการทำหัตถการ · งานอาชีวอนามัย รพ.ชลบุรี</div>
     </div>
   </div>
 
@@ -1192,35 +1178,35 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
     <div class="form-section">
       <div class="form-section-title">ข้อมูลการประเมิน</div>
       <div class="form-row">
-        <label>ผู้รับการประเมิน <span class="req">*</span></label>
+        <label>ชื่อผู้รับการประเมิน <span class="req">*</span></label>
         <input type="text" placeholder="รหัสพนักงาน (ไม่ระบุชื่อ)">
       </div>
       <div class="two-col">
         <div class="form-row">
           <label>ตำแหน่ง <span class="req">*</span></label>
-          <select>
-            <option value="">เลือก...</option>
+          <input id="audit-position" list="audit-position-list" placeholder="เลือกหรือพิมพ์...">
+          <datalist id="audit-position-list">
             <option>พยาบาลวิชาชีพ</option>
             <option>แพทย์</option>
             <option>ผู้ช่วยพยาบาล</option>
             <option>นักศึกษาพยาบาล</option>
             <option>แพทย์ฝึกหัด / Intern</option>
-          </select>
+          </datalist>
         </div>
         <div class="form-row">
           <label>แผนก / หน่วยงาน <span class="req">*</span></label>
-          <select>
-            <option value="">เลือก...</option>
+          <input id="audit-department" list="audit-dept-list" placeholder="เลือกหรือพิมพ์...">
+          <datalist id="audit-dept-list">
             <option>ICU</option><option>ER</option><option>OPD</option>
             <option>ตึกศัลยกรรม</option><option>ตึกอายุรกรรม</option>
             <option>ห้องผ่าตัด</option><option>ห้องคลอด</option>
-          </select>
+          </datalist>
         </div>
       </div>
       <div class="two-col">
         <div class="form-row">
           <label>วันที่ / เวลา <span class="req">*</span></label>
-          <input type="datetime-local">
+          <input type="datetime-local" id="audit-datetime">
         </div>
         <div class="form-row">
           <label>Supervisor ผู้ประเมิน</label>
@@ -1228,17 +1214,16 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
         </div>
       </div>
       <div class="form-row">
-        <label>หัตถการที่สังเกต <span class="req">*</span></label>
-        <select>
-          <option value="">เลือก...</option>
+        <label>หัตถการ <span class="req">*</span></label>
+        <input id="audit-procedure" list="audit-proc-list" placeholder="เลือกหรือพิมพ์...">
+        <datalist id="audit-proc-list">
           <option>เจาะเลือด / เจาะหลอดเลือดดำ</option>
           <option>ให้ IV / ต่อ IV set / ดูแล IV line</option>
-          <option>ฉีดยา (IV push / IM / SC)</option>
+          <option>ฉีดยา</option>
           <option>เย็บแผล / ตัดไหม</option>
           <option>ผ่าตัด / ทำแผลผ่าตัด</option>
           <option>ทำแผลทั่วไป</option>
-          <option>อื่นๆ</option>
-        </select>
+        </datalist>
       </div>
     </div>
 
@@ -1280,7 +1265,6 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
       <div id="obs-result-badge" style="text-align:center;padding:12px;border-radius:10px;background:var(--gray-light);font-size:14px;font-weight:700;color:var(--text-light);">
         กรุณากรอกแบบประเมินก่อน
       </div>
-      <div style="margin-top:8px;font-size:11px;color:var(--text-light);text-align:center;">ผ่าน = ≥ 80% ของข้อที่เกี่ยวข้อง (ไม่นับข้อ N/A)</div>
     </div>
 
     <!-- Remarks -->
@@ -1288,16 +1272,6 @@ input.err-border, select.err-border { border-color: var(--red) !important; }
       <div class="form-section-title">ข้อเสนอแนะสำหรับผู้ปฏิบัติ</div>
       <div class="form-row">
         <textarea placeholder="ระบุข้อที่ไม่ผ่าน สาเหตุ และคำแนะนำ..." style="min-height:100px;"></textarea>
-      </div>
-      <div class="two-col">
-        <div class="form-row">
-          <label>ลงชื่อผู้รับการประเมิน</label>
-          <input type="text" placeholder="ชื่อ-สกุล">
-        </div>
-        <div class="form-row">
-          <label>ลงชื่อ Supervisor</label>
-          <input type="text" placeholder="ชื่อ-สกุล">
-        </div>
       </div>
     </div>
 
@@ -1738,8 +1712,15 @@ function onTreatmentChange(value) {
   if (typeof updateFormProgress === 'function') updateFormProgress();
 }
 
-// Timer starts hidden — appears after user confirms injury time in popup
-// (Popup defaults to current time when opened — see showInjuryTimeModal)
+// Auto-fill audit datetime with current local time
+(function() {
+  const el = document.getElementById('audit-datetime');
+  if (!el) return;
+  const now = new Date();
+  // datetime-local needs format YYYY-MM-DDThh:mm
+  const pad = n => String(n).padStart(2,'0');
+  el.value = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+})();
 
 // === FORM VALIDATION ===
 function showErr(id, msg) {
@@ -1802,8 +1783,8 @@ function validateAndSubmitIncident() {
   reqCheckbox('f-ppe','err-ppe','กรุณาเลือก PPE ที่สวมใส่ (เลือก "ไม่ได้ใส่" ถ้าไม่มี)');
   // ค.
   reqRadio('f-src-hiv','err-src-hiv','กรุณาระบุสถานะ HIV ของผู้ป่วยต้นทาง');
-  reqRadio('f-src-hcv','err-src-hcv','กรุณาระบุสถานะ HCV ของผู้ป่วยต้นทาง');
   reqRadio('f-src-hbv','err-src-hbv','กรุณาระบุสถานะ HBV ของผู้ป่วยต้นทาง');
+  reqRadio('f-src-hcv','err-src-hcv','กรุณาระบุสถานะ HCV ของผู้ป่วยต้นทาง');
   // ง.
   reqRadio('f-hbv-imm','err-hbv-imm','กรุณาระบุสถานะ Anti-HBs');
   req('f-pep-time','err-pep-time','กรุณาเลือกระยะเวลาที่รับยาต้านไวรัส');
@@ -1825,25 +1806,26 @@ function validateAndSubmitIncident() {
 
 // === HIV SOURCE SELECTOR (Step 3 PEP decision) ===
 function selectHIV(type) {
-  // Reset all buttons
   ['pos','neg1','neg2'].forEach(t => {
     const btn = document.getElementById('hbtn-' + t);
     btn.style.borderColor = 'var(--border)';
     btn.style.background = 'white';
-    btn.style.color = 'inherit';
   });
-  // Highlight selected
   const colors = { pos: ['var(--red)','#FDECEA'], neg1: ['var(--orange)','#FEF5E7'], neg2: ['var(--green)','#EAFAF1'] };
   const btn = document.getElementById('hbtn-' + type);
   btn.style.borderColor = colors[type][0];
   btn.style.background = colors[type][1];
-
-  // Hide all recs, show selected
   ['pos','neg1','neg2'].forEach(t => {
     document.getElementById('pep-rec-' + t).style.display = 'none';
   });
   document.getElementById('pep-recommendation').style.display = 'block';
   document.getElementById('pep-rec-' + type).style.display = 'block';
+
+  // Prefill form section ค
+  const formVal = (type === 'pos') ? 'pos' : (type === 'neg2') ? 'neg' : 'neg';
+  const formValFull = (type === 'pos') ? 'pos' : (type === 'neg1') ? 'unknown' : 'neg';
+  const el = document.querySelector(`input[name="f-src-hiv"][value="${formValFull}"]`);
+  if (el) { el.checked = true; clearErr(document.getElementById('err-src-hiv')); }
 }
 
 // === HBV (HBsAg) SELECTOR ===
@@ -1865,6 +1847,10 @@ function selectHBV(type) {
   const rec  = document.getElementById('hbv-rec-' + type);
   if (wrap) wrap.style.display = 'block';
   if (rec) rec.style.display = 'block';
+
+  // Prefill form section ค
+  const el = document.querySelector(`input[name="f-src-hbv"][value="${type}"]`);
+  if (el) { el.checked = true; clearErr(document.getElementById('err-src-hbv')); }
 }
 
 // === HCV SELECTOR ===
@@ -1886,6 +1872,10 @@ function selectHCV(type) {
   const rec  = document.getElementById('hcv-rec-' + type);
   if (wrap) wrap.style.display = 'block';
   if (rec) rec.style.display = 'block';
+
+  // Prefill form section ค
+  const el = document.querySelector(`input[name="f-src-hcv"][value="${type}"]`);
+  if (el) { el.checked = true; clearErr(document.getElementById('err-src-hcv')); }
 }
 
 // === EXPOSURE TYPE SELECTOR ===
@@ -1909,31 +1899,23 @@ renderIncDots();
 
 // PEP timer moved to mini timer in topbar
 
-// === ENV ASSESSMENT (มี/ไม่มี, 13 items) ===
+// === ENV ASSESSMENT (มี/ไม่มี) ===
 const envGroups = {
   1: [
-    { id:'1.1', text:'มีถังทิ้งของมีคมครบทุกจุดทำหัตถการ' },
-    { id:'1.2', text:'ถังทิ้งอยู่ในระยะ ≤ 1 เมตรจากจุดทำหัตถการ ไม่ต้องเดินไปทิ้ง' },
-    { id:'1.3', text:'ถังทิ้งยึดติดผนัง/ขาตั้ง ไม่วางบนพื้นหรือเตียงผู้ป่วย' },
-    { id:'1.4', text:'ระดับเต็มของถังไม่เกิน 3/4 มีเส้นแสดงระดับชัดเจน' },
-    { id:'1.5', text:'ถังมีฝาปิดสนิท ไม่มีของมีคมโผล่พ้นปาก' },
+    { id:'1.1', text:'มีถังทิ้งของมีคมและรถทำหัตถการเพียงพอ' },
+    { id:'1.2', text:'ถังทิ้งยึดติดผนัง/ขาตั้ง ไม่วางบนพื้นหรือเตียงผู้ป่วย' },
+    { id:'1.3', text:'ระดับเต็มของถังไม่เกิน 3/4 มีเส้นแสดงระดับชัดเจน' },
+    { id:'1.4', text:'ถังมีฝาปิดสนิท ไม่มีของมีคมโผล่พ้นปาก' },
   ],
   2: [
-    { id:'2.1', text:'ไม่มีการสวมปลอกเข็มกลับด้วยสองมือ (No two-hand recapping)' },
-    { id:'2.2', text:'เข็มที่ใช้แล้วไม่วางบนถาด/เตียงโดยไม่มีภาชนะป้องกัน' },
-    { id:'2.3', text:'มี Recapping device สำหรับกรณีจำเป็น (หลัง draw ยา)' },
+    { id:'2.1', text:'มีอุปกรณ์ป้องกันพร้อมใช้งาน ได้แก่ ถุงมือ หมวก หน้ากาก เฟซชิลด์ เสื้อกาวน์ เป็นต้น' },
   ],
   3: [
-    { id:'3.1', text:'มีถุงมือ S, M, L พร้อมใช้งาน' },
-    { id:'3.2', text:'มี Mask และ Face shield พร้อมใช้งานในหน่วยงาน (สำหรับหัตถการที่มีความเสี่ยงสารคัดหลั่งกระเด็น)' },
+    { id:'3.1', text:'แสงสว่างในพื้นที่ทำหัตถการเพียงพอ' },
+    { id:'3.2', text:'ของมีคมไม่วางเกะกะหรือปะปนกับอุปกรณ์อื่น' },
   ],
   4: [
-    { id:'4.1', text:'แสงสว่างในพื้นที่ทำหัตถการเพียงพอ ไม่มีเงาบดบัง' },
-    { id:'4.2', text:'ของมีคมไม่วางเกะกะหรือปะปนกับอุปกรณ์อื่น' },
-    { id:'4.3', text:'มีป้ายเตือนในจุดเสี่ยง (Caution, Biohazard)' },
-  ],
-  5: [
-    { id:'5.1', text:'มีขั้นตอนเมื่อมีอุบัติเหตุเข็มทิ่มหรือสารคัดหลั่งชัดเจน' },
+    { id:'4.1', text:'มีขั้นตอนเมื่อมีอุบัติเหตุเข็มทิ่มหรือสารคัดหลั่งติดชัดเจน เจ้าหน้าที่รับทราบและสามารถปฏิบัติตามได้' },
   ],
 };
 const envState = {}; // id -> 'yes' | 'no' | null
@@ -1987,29 +1969,27 @@ function updateEnvScore() {
   }
 }
 // Build all env groups on load
-[1,2,3,4,5].forEach(buildEnvGroup);
+[1,2,3,4].forEach(buildEnvGroup);
 
 
 // === OBS SAFETY CHECKLIST (pass/fail/NA, 13 items) ===
 const obsGroups = {
   1: [
-    { num:1,  text:'ล้างมือหรือใช้ alcohol gel ก่อนสวมถุงมือ' },
-    { num:2,  text:'เลือกขนาดถุงมือที่เหมาะสม (S/M/L) และสวมครบทั้งสองข้าง' },
-    { num:3,  text:'สวม Mask และ Face shield / Goggles สำหรับหัตถการที่มีความเสี่ยงกระเด็น' },
-    { num:4,  text:'เตรียมอุปกรณ์ให้พร้อมบนถาดหรือรถทำแผลที่เป็นระเบียบ' },
+    { num:1,  text:'ล้างมือ 7 ขั้นตอน ก่อนทำหัตถการ' },
+    { num:2,  text:'สวมอุปกรณ์ป้องกันส่วนบุคคล เช่น ถุงมือ หน้ากากอนามัย เฟซชิลด์ หรือแว่นตา ที่เหมาะสมในการทำหัตถการ' },
+    { num:3,  text:'จัดวางอุปกรณ์บนถาดหรือรถทำหัตถการอย่างเป็นระเบียบก่อนเริ่มงาน' },
   ],
   2: [
-    { num:5,  text:'ไม่วางเข็มหรือของมีคมบนเตียง ผ้า หรือถาดโดยไม่มีภาชนะป้องกัน' },
-    { num:6,  text:'ไม่สวมปลอกเข็มกลับด้วยสองมือ (No two-hand recapping)' },
-    { num:7,  text:'หากจำเป็นต้อง recap ใช้ One-hand technique หรือ Recapping device เท่านั้น' },
-    { num:8,  text:'แจ้งผู้ป่วยหรือผู้ช่วยทุกครั้งก่อนส่งหรือรับของมีคม (Verbal warning)' },
-    { num:9,  text:'ทิ้งเข็มลงถังของมีคมทันทีหลังใช้ ไม่วางพักค้าง' },
-    { num:10, text:'ไม่ถอดเข็มออกจากกระบอกฉีดยาด้วยมือเปล่า' },
+    { num:4,  text:'ไม่วางเข็มหรือของมีคมไว้นอกภาชนะรองรับ' },
+    { num:5,  text:'ไม่สวมปลอกเข็มกลับ ทิ้งลงถังของมีคมทันทีหลังใช้' },
+    { num:6,  text:'หากจำเป็นต้องสวมปลอกเข็มกลับ ใช้วิธีมือเดียวเท่านั้น' },
+    { num:7,  text:'บอกกล่าวล่วงหน้าทุกครั้งก่อนส่งหรือรับของมีคมกับผู้ช่วย' },
+    { num:8,  text:'ทิ้งเข็มลงถังของมีคมทันทีหลังทำหัตถการเสร็จสิ้น โดยไม่วางทิ้งไว้' },
   ],
   3: [
-    { num:11, text:'ทิ้งอุปกรณ์ใช้แล้วในภาชนะที่ถูกต้อง (ของมีคม / ขยะติดเชื้อ)' },
-    { num:12, text:'ถอดถุงมือโดยไม่ให้มือสัมผัสด้านนอก และทิ้งทันที' },
-    { num:13, text:'ล้างมือหลังถอดถุงมือทุกครั้ง' },
+    { num:9,  text:'ทิ้งอุปกรณ์ใช้แล้วในภาชนะที่ถูกประเภท (กล่องของมีคม / ถุงขยะติดเชื้อ)' },
+    { num:10, text:'ถอดและทิ้งถุงมืออย่างถูกวิธี' },
+    { num:11, text:'ล้างมือหลังทำหัตถการ' },
   ],
 };
 const obsState = {}; // num -> 'pass'|'fail'|'na'|null
@@ -2047,19 +2027,26 @@ function updateObsScore() {
   document.getElementById('obs-pass').textContent = pass;
   document.getElementById('obs-fail').textContent = fail;
   document.getElementById('obs-na').textContent = na;
+
+  const total = Object.values(obsGroups).flat().length; // 11
   const relevant = pass + fail;
+  const missing = relevant - pass;  // items not passed (excluding N/A)
   const badge = document.getElementById('obs-result-badge');
+
   if (relevant === 0) {
     badge.style.background='var(--gray-light)'; badge.style.color='var(--text-light)';
-    badge.textContent='กรุณากรอกแบบประเมินก่อน'; return;
+    badge.textContent='กรุณากรอกแบบประเมินก่อน';
+    return;
   }
-  const pct = Math.round(pass / relevant * 100);
-  if (pct >= 80) {
+  if (missing === 0) {
     badge.style.background='#EAFAF1'; badge.style.color='#1E8449';
-    badge.textContent=`✅ ผ่าน (${pct}% ของข้อที่เกี่ยวข้อง)`;
+    badge.textContent=`✅ ผ่านการประเมิน`;
+  } else if (missing <= 3) {
+    badge.style.background='#FEF5E7'; badge.style.color='#784212';
+    badge.textContent=`⚠️ ควรปรับปรุง`;
   } else {
     badge.style.background='#FDECEA'; badge.style.color='#922B21';
-    badge.textContent=`⚠️ ต้องปรับปรุง (${pct}% ของข้อที่เกี่ยวข้อง)`;
+    badge.textContent=`🚨 ควรปรับปรุงอย่างยิ่ง`;
   }
 }
 // Build all obs groups on load
@@ -2135,12 +2122,12 @@ function submitIncident() {
   const bodyParts = [...document.querySelectorAll('input[name="f-body"]:checked')].map(el => el.value);
   const ppe       = [...document.querySelectorAll('input[name="f-ppe"]:checked')].map(el => el.value);
 
-  // สาเหตุ: ส่งเป็น keyed object { c1: "มี"|"", c2: "มี"|"", ... }
+  // สาเหตุ: ส่งเป็น keyed object { c1: "มี"|"ไม่มี", c2: ..., ... }
   const causeKeys = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11','c12','c13','c14','c15','c16','c17'];
   const causes = {};
   causeKeys.forEach(key => {
     const el = document.querySelector(`input[name="f-cause"][data-key="${key}"]`);
-    causes[key] = (el && el.checked) ? "มี" : "";
+    causes[key] = (el && el.checked) ? "มี" : "ไม่มี";
   });
 
   let hivStep3 = "", pepAdvice = "";
@@ -2160,10 +2147,11 @@ function submitIncident() {
     hn:              g('f-hn'),
     age:             g('f-age'),
     gender:          g('f-gender'),
+    phone:           g('f-phone'),
+    phoneDept:       g('f-phone-dept'),
     position:        g('f-position'),
     workExp:         g('f-work-exp'),
     ward:            g('f-ward'),
-    pct:             g('f-pct'),
     incidentDate:    g('f-date'),
     incidentTime:    g('f-time'),
     shift:           r('f-shift'),
@@ -2190,21 +2178,19 @@ function submitIncident() {
 
 // ── เมนู 2: Environment Assessment ─────────────────────────
 function submitEnviron() {
-  // scores จาก envState
-  const scoreKeys = ['1.1','1.2','1.3','1.4','1.5','2.1','2.2','2.3','3.1','3.2','4.1','4.2','4.3','5.1'];
+  const scoreKeys = ['1.1','1.2','1.3','1.4','2.1','3.1','3.2','4.1'];
   const scores = {};
   scoreKeys.forEach(k => { scores[k] = (typeof envState[k] !== 'undefined') ? envState[k] : null; });
 
-  // 2 textareas: 1st = แผนแก้ไข/ปัญหาที่พบ, 2nd = ข้อเสนอแนะเพิ่มเติม
   const textareas = document.querySelectorAll('#screen-env textarea');
   const remedialPlan = textareas[0]?.value.trim() || "";
   const suggestion   = textareas[1]?.value.trim() || "";
 
   const payload = {
-    menu: "environ",
-    department:   qSelectVal('#screen-env', 0),
-    assessDate:   qVal('#screen-env input[type="date"]'),
-    assessor:     qVal('#screen-env input[placeholder*="ชื่อ-นามสกุล"]'),
+    menu:         "environ",
+    department:   document.getElementById('env-department')?.value.trim() || "",
+    assessDate:   document.getElementById('env-assess-date')?.value || "",
+    assessor:     document.getElementById('env-assessor')?.value.trim() || "",
     scores:       scores,
     remedialPlan: remedialPlan,
     suggestion:   suggestion
@@ -2213,29 +2199,34 @@ function submitEnviron() {
   postToSheet(payload, 'screen-env', 'btn-submit-environ');
 }
 
+// Auto-fill env assessment date with today in Buddhist dd/mm/yyyy
+(function() {
+  const el = document.getElementById('env-assess-date');
+  if (!el) return;
+  const now = new Date();
+  const dd  = String(now.getDate()).padStart(2,'0');
+  const mm  = String(now.getMonth()+1).padStart(2,'0');
+  const yyyy = now.getFullYear() + 543;
+  el.value = `${dd}/${mm}/${yyyy}`;
+})();
+
 // ── เมนู 3: Safety Observation ──────────────────────────────
 function submitAudit() {
   // observations มาจาก obsState ที่ build อยู่แล้ว
+  // observations มาจาก obsState
   const observations = {};
   Object.keys(obsState).forEach(k => { observations[Number(k)] = obsState[k]; });
-
-  // Sign fields
-  const signInputs = [...document.querySelectorAll('#screen-audit .two-col input[type="text"]')];
-  const signAuditee    = signInputs[signInputs.length - 2]?.value.trim() || "";
-  const signSupervisor = signInputs[signInputs.length - 1]?.value.trim() || "";
 
   const payload = {
     menu: "audit",
     auditeeId:     qVal('#screen-audit input[placeholder*="รหัสพนักงาน"]'),
-    auditeePos:    qSelectVal('#screen-audit', 0),
-    department:    qSelectVal('#screen-audit', 1),
-    auditDateTime: qVal('#screen-audit input[type="datetime-local"]'),
+    auditeePos:    document.getElementById('audit-position')?.value.trim() || "",
+    department:    document.getElementById('audit-department')?.value.trim() || "",
+    auditDateTime: document.getElementById('audit-datetime')?.value || "",
     supervisor:    qVal('#screen-audit input[placeholder*="ชื่อ-สกุล"]'),
-    procedure:     qSelectVal('#screen-audit', 2),
+    procedure:     document.getElementById('audit-procedure')?.value.trim() || "",
     observations:  observations,
-    feedback:      qVal('#screen-audit textarea'),
-    signAuditee:   signAuditee,
-    signSupervisor:signSupervisor
+    feedback:      qVal('#screen-audit textarea')
   };
 
   postToSheet(payload, 'screen-audit', 'btn-submit-audit');
